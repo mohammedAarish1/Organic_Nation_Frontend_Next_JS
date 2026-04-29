@@ -3,6 +3,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* text colors  */
+  /* --primary: #722521; */
+  --primary: #bb4d00;
+  --secondary: #1e2939;
+  --muted: #4a5565;
+
+  /* background gradients  */
+  --gradient-primary: linear-gradient(to bottom, #fffbeb, #ffffff, #ecfdf5);
+  --gradient-secondary: linear-gradient(to right, #fef3c7, #d1fae5);
+  --gradient-text: linear-gradient(to right, #bb4a00, #b91c1c, #047857);
+  /* --gradient-btn: linear-gradient(to right, #c46a0a, #b91c1c); */
+  --gradient-btn: linear-gradient(to right, #e16f00, #b91c1c);
 }
 
 @theme inline {
@@ -10,17 +23,50 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* registering color in tailwind  */
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  /* --color-accent: var(--accent); */
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
 
+/* --- Custom Tailwind utility for gradients --- */
+@layer utilities {
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+  .bg-gradient-secondary {
+    background-image: var(--gradient-secondary);
+  }
+  .bg-gradient-text {
+    background-image: var(--gradient-text);
+  }
+  .bg-gradient-btn {
+    background-image: var(--gradient-btn);
+  }
+  /* .bg-gradient-secondary {
+    background-image: var(--gradient-secondary);
+  } */
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
