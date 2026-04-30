@@ -6,6 +6,7 @@ import { AnimationGrid } from "../animations/animation2";
 import { BlogsSkeleton } from "../skeletons/BlogsSkeleton";
 import SectionHeader from "./SectionHeader";
 import { NavigationButton } from "../buttons/NavigationButton";
+import { API_BASE_URL } from "@/constants";
 
 interface Recipe {
   _id: string;
@@ -30,7 +31,7 @@ interface RecipeSectionProps {
 
 async function getRecipes() {
   try {
-    const res = await fetch("http://localhost:8000/api/recipes", {
+    const res = await fetch(`${API_BASE_URL}/api/recipes`, {
       // Revalidate every 1 hour
       next: { revalidate: 3600 },
     });
@@ -41,7 +42,7 @@ async function getRecipes() {
 
     return res.json();
   } catch (error) {
-    console.error("Error fetching blogs:", error);
+    console.error("Error fetching recipes:", error);
     return [];
   }
 }
