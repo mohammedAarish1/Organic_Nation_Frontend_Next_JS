@@ -34,7 +34,7 @@ async function getBlogs() {
 
     return res.json();
   } catch (error) {
-    console.error("Error fetching blogs:", error);
+    console.error("Error fetching blogsss:", error);
     return [];
   }
 }

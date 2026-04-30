@@ -1,6 +1,5 @@
+import { API_BASE_URL } from "@/constants";
 import { MetadataRoute } from "next";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 // Helper to make URLs XML-safe
 function safeUrl(url: string): string {

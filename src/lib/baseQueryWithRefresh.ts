@@ -4,11 +4,10 @@ import type {
   FetchArgs,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query";
+import { API_BASE_URL } from "@/constants";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL
-    ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api`
-    : "http://localhost:8000/api",
+  baseUrl: API_BASE_URL ? `${API_BASE_URL}/api` : "http://localhost:8000/api",
   credentials: "include",
   prepareHeaders: (headers) => {
     // Add any common headers here
