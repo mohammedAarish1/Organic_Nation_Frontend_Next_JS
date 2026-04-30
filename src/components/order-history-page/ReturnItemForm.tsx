@@ -12,14 +12,15 @@ import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAddReturnItemMutation } from "@/lib/services/api/ordersApi";
 import { toast } from "react-toastify";
+import { Product } from "@/types";
 
 // Types
-interface Product {
-  "name-url": string;
-  weight: string;
-  quantity: number;
-  unitPrice: number;
-}
+// interface Product {
+//   "name-url": string;
+//   weight: string;
+//   quantity: number;
+//   unitPrice: number;
+// }
 
 interface ReturnItemFormProps {
   product: Product;

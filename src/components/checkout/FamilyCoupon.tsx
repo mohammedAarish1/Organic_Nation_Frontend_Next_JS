@@ -20,7 +20,7 @@ interface ApplyCouponPayload {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const CONFETTI_COLORS = ["#7A2E1D", "#9B7A2F", "#6B8E23", "#D87C45"] as const;
+// const CONFETTI_COLORS = ["#7A2E1D", "#9B7A2F", "#6B8E23", "#D87C45"] as const;
 
 const INITIAL_VALUES: CouponFormValues = { couponCode: "" };
 
@@ -38,7 +38,7 @@ async function triggerConfetti(): Promise<void> {
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 },
-      colors: CONFETTI_COLORS,
+      colors: ["#7A2E1D", "#9B7A2F", "#6B8E23", "#D87C45"] as string[],
       shapes: ["circle", "square"],
       gravity: 0.8,
       drift: 0,
@@ -51,14 +51,14 @@ async function triggerConfetti(): Promise<void> {
         angle: 60,
         spread: 55,
         origin: { x: 0 },
-        colors: CONFETTI_COLORS,
+        colors: ["#7A2E1D", "#9B7A2F", "#6B8E23", "#D87C45"] as string[],
       });
       confetti({
         particleCount: 50,
         angle: 120,
         spread: 55,
         origin: { x: 1 },
-        colors: CONFETTI_COLORS,
+        colors: ["#7A2E1D", "#9B7A2F", "#6B8E23", "#D87C45"] as string[],
       });
     }, 200);
   } catch (err) {
@@ -149,7 +149,7 @@ const FamilyCoupon = memo(function FamilyCoupon() {
           // Fire-and-forget — UX must not block on this
           void triggerConfetti();
         }
-      } catch (error: unknown) {
+      } catch (error: any) {
         const message = error?.data?.error || "Coupon code is not valid!";
         setErrorMessage(message);
       } finally {

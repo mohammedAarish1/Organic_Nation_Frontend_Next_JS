@@ -5,6 +5,11 @@ interface FetchOptions extends RequestInit {
   noCache?: boolean; // Add this for explicit no-cache cases
 }
 
+type Category = {
+  category: string;
+  categoryUrl: string;
+};
+
 async function apiClient<T>(
   endpoint: string,
   options: FetchOptions = {},
@@ -46,7 +51,7 @@ async function apiClient<T>(
 // Export typed functions with proper caching
 export async function getProductsAndCategories() {
   // Cache for 1 hour (3600 seconds) - adjust as needed
-  return apiClient<{ products: any[]; categoryList: string[] }>("/products", {
+  return apiClient<{ products: any[]; categoryList: Category[] }>("/products", {
     revalidate: 3600,
   });
 }

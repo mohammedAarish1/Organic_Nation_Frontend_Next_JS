@@ -1,28 +1,28 @@
 "use client";
 
-import { showCartNotification } from "@/lib/features/cart/cartSlice";
-import { Heart, ShoppingCart, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import AddToCartBtn from "./AddToCartBtn";
 import Link from "next/link";
 import Image from "next/image";
 import WishlistBtn from "./WishlistBtn";
+import { Product } from "@/types";
 
 export default function ProductCard({
   product,
   index,
 }: {
-  product: any;
+  product: Product;
   index: number;
 }) {
-  const dispatch = useDispatch();
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  // const dispatch = useDispatch();
+  // const [isWishlisted, setIsWishlisted] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const discount = Math.round(
-    ((product.originalPrice - product.price) / product.originalPrice) * 100,
-  );
+  // const discount = Math.round(
+  //   ((product.originalPrice - product.price) / product.originalPrice) * 100,
+  // );
   //  const mainImage = product.img?.[0];
   const mainImage = product.img?.filter((image) =>
     image.lg.includes("front"),

@@ -1,6 +1,13 @@
 import { useCart } from "@/lib/custom-hooks/useCart";
 import { Minus, Plus } from "lucide-react";
 
+type CurItem = {
+  quantity?: number;
+  availability?: number;
+  "name-url"?: string;
+  [key: string]: unknown;
+};
+
 export const QuantityControl = ({
   quantity,
   setQuantity,
@@ -10,8 +17,8 @@ export const QuantityControl = ({
   // isUpdating,
 }: {
   quantity: number;
-  setQuantity: () => void;
-  curItem: {};
+  setQuantity: React.Dispatch<React.SetStateAction<number>>;
+  curItem?: CurItem;
   isCartPage?: boolean;
   // onIncrease: () => void;
   // onDecrease: () => void;

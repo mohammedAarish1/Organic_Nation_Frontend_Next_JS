@@ -1,12 +1,30 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { baseQueryWithRefresh } from "../../baseQueryWithRefresh";
-export interface User {
-  id: string;
-  phone: string;
-  name?: string;
-  email?: string;
-}
+import { User } from "@/types";
+
+// types/index.ts (add these alongside your User type)
+
+export type GetCurrentUserResponse = {
+  user: User;
+  message: string;
+};
+
+export type VerifyOtpResponse = {
+  success: boolean;
+  message: string;
+};
+
+export type LogoutResponse = {
+  message: string;
+};
+
+// export interface User {
+//   id: string;
+//   phone: string;
+//   name?: string;
+//   email?: string;
+// }
 
 // const baseQuery = fetchBaseQuery({
 //   baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
@@ -36,12 +54,15 @@ export const authApi = createApi({
   baseQuery: baseQueryWithRefresh,
   tagTypes: ["User"],
   endpoints: (builder) => ({
-    sendOtp: builder.mutation<{ message: string }, { phoneNumber: string }>({
+    sendOtp: builder.mutation<
+      { message: string; success: boolean },
+      { phoneNumber: string }
+    >({
       query: (body) => ({ url: "/otp-auth/send-otp", method: "POST", body }),
     }),
     verifyOtp: builder.mutation<
-      { user: User; message: string },
-      { phoneNumber: string; otp: string }
+      VerifyOtpResponse,
+      { otp: string; phoneNumber: string }
     >({
       query: (body) => ({
         url: "/otp-auth/verify-otp-new",
@@ -50,7 +71,7 @@ export const authApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
-    getCurrentUser: builder.query<User, void>({
+    getCurrentUser: builder.query<GetCurrentUserResponse, void>({
       query: () => "/auth/user",
       providesTags: ["User"],
     }),

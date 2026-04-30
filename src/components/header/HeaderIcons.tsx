@@ -10,6 +10,7 @@ import { useLogoutMutation } from "@/lib/services/api/authApi";
 import UserMenu from "../user/UserMenu";
 import SearchButton from "../menu/SearchButton";
 import { useProducts } from "../providers/ProductsProvider";
+import { Product } from "@/types";
 
 export const HeaderIcons = memo(function HeaderIcons() {
   const { products } = useProducts();

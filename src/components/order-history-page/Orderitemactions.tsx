@@ -14,7 +14,8 @@ import { Eye, ShoppingBag, Star, RotateCcw } from "lucide-react";
 import { useAppDispatch } from "@/lib/hooks";
 import { useCart } from "@/lib/custom-hooks/useCart";
 import { showCartNotification } from "@/lib/features/cart/cartSlice";
-import type { OrderItem, Product } from "../shared/types";
+import { OrderItem } from "@/features/order/types";
+import { Product } from "@/types";
 
 interface Props {
   item: OrderItem;

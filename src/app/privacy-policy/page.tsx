@@ -11,6 +11,7 @@ import {
   Mail,
   AlertCircle,
   CheckCircle,
+  LucideIcon,
 } from "lucide-react";
 import {
   FadeInView,
@@ -18,6 +19,15 @@ import {
   ShimmerReveal,
 } from "@/components/animations/animations";
 import Link from "next/link";
+import { ReactNode } from "react";
+
+type PolicySectionProps = {
+  id: string;
+  icon: LucideIcon;
+  title: string;
+  linear: string;
+  content: ReactNode;
+};
 
 export default function PrivacyPolicyPage() {
   return (
@@ -537,8 +547,8 @@ const ContentWrapper = () => {
   return (
     <div className="px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-5xl space-y-8">
-        {sections.map((section, index) => (
-          <PolicySection key={section.id} section={section} index={index} />
+        {sections.map((section, _) => (
+          <PolicySection key={section.id} section={section} />
         ))}
         <DisclaimerSection />
       </div>
@@ -547,7 +557,7 @@ const ContentWrapper = () => {
 };
 
 // Policy Section Component
-const PolicySection = ({ section, index }) => {
+const PolicySection = ({ section }: { section: PolicySectionProps }) => {
   return (
     <ShimmerReveal delay={0.3}>
       <div className="overflow-hidden rounded-2xl bg-white shadow-xl transition-all hover:shadow-2xl">

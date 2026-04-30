@@ -37,7 +37,7 @@ const WishlistBtn = ({
   };
   useEffect(() => {
     if (isAuthenticated) {
-      getWishlistProducts();
+      getWishlistProducts(undefined);
     }
   }, [isAuthenticated]);
   return (

@@ -35,6 +35,7 @@ import {
   useCalculateShippingFeeMutation,
 } from "@/lib/services/api/cartApi";
 import { freeShippingEligibleAmt } from "@/constants";
+import { Product } from "@/types";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -492,7 +493,7 @@ export default function CheckoutForm() {
   // ── Bootstrap: load saved addresses & COD charges once ──────────────────────
   useEffect(() => {
     if (user?.addresses?.length) {
-      setSavedAddresses(user.addresses);
+      setSavedAddresses(user.addresses as Address[]);
       setSelectedAddress(user.addresses[0]._id);
     } else {
       setShowAddressForm(true);
@@ -649,7 +650,7 @@ export default function CheckoutForm() {
 
   useEffect(() => {
     const value = cartItems?.some(
-      (product: {}) => product?.category === "Demo",
+      (product: Product) => product?.category === "Demo",
     );
     setIsTestingProduct(value);
   }, [isTestingProduct, cartItems]);

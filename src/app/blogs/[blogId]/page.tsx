@@ -1,4 +1,3 @@
-import { ComponentPropsWithoutRef } from "react";
 import {
   ArrowLeft,
   Calendar,
@@ -22,8 +21,14 @@ import {
   ShimmerReveal,
 } from "@/components/animations/animations";
 import ShareBox from "@/components/blog-details-page/ShareBox";
-
+import type { Components } from "react-markdown";
 // ─── Blog data (replace with your MongoDB / fetch call) ───────────────────────
+
+type AuthorCardProps = {
+  author: string;
+  date: string;
+  mins: number;
+};
 
 export function unescapeMarkdown(str: string): string {
   return str
@@ -99,53 +104,53 @@ function readingTime(text: string) {
 }
 
 // ─── Markdown components — pure Tailwind ──────────────────────────────────────
-const mdComponents = {
-  h1: ({ children }: ComponentPropsWithoutRef<"h1">) => (
+const mdComponents: Components = {
+  h1: ({ children }) => (
     <h1 className="mt-10 mb-4 text-2xl font-bold text-gray-900 sm:text-3xl">
       {children}
     </h1>
   ),
-  h2: ({ children }: ComponentPropsWithoutRef<"h1">) => (
+  h2: ({ children }) => (
     <h2 className="mt-8 mb-3 border-b-2 border-amber-200 pb-2 text-xl font-bold text-gray-900 sm:text-2xl">
       {children}
     </h2>
   ),
-  h3: ({ children }: ComponentPropsWithoutRef<"h1">) => (
+  h3: ({ children }) => (
     <h3 className="mt-6 mb-2 text-lg font-semibold text-amber-800">
       {children}
     </h3>
   ),
-  p: ({ children }: ComponentPropsWithoutRef<"h1">) => (
+  p: ({ children }) => (
     <p className="mb-4 leading-relaxed text-gray-700 sm:text-lg">{children}</p>
   ),
-  strong: ({ children }: ComponentPropsWithoutRef<"h1">) => (
+  strong: ({ children }) => (
     <strong className="font-semibold text-gray-900">{children}</strong>
   ),
-  ol: ({ children }: ComponentPropsWithoutRef<"h1">) => (
+  ol: ({ children }) => (
     <ol className="mb-6 ml-4 list-decimal space-y-3 marker:font-semibold marker:text-amber-600">
       {children}
     </ol>
   ),
-  ul: ({ children }: ComponentPropsWithoutRef<"h1">) => (
+  ul: ({ children }) => (
     <ul className="mb-6 ml-4 list-disc space-y-3 marker:text-amber-600">
       {children}
     </ul>
   ),
-  li: ({ children }: ComponentPropsWithoutRef<"h1">) => (
+  li: ({ children }) => (
     <li className="pl-1 leading-relaxed text-gray-700 sm:text-lg">
       {children}
     </li>
   ),
-  blockquote: ({ children }: ComponentPropsWithoutRef<"h1">) => (
+  blockquote: ({ children }) => (
     <blockquote className="my-6 rounded-r-2xl border-l-4 border-amber-500 bg-amber-50/60 py-4 pr-4 pl-5 text-amber-900 italic">
       {children}
     </blockquote>
   ),
   hr: () => (
     <div className="my-8 flex items-center gap-3">
-      <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-300 to-transparent" />
+      <div className="h-px flex-1 bg-linear-to-r from-transparent via-amber-300 to-transparent" />
       <span className="text-xs text-amber-400">✦</span>
-      <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-300 to-transparent" />
+      <div className="h-px flex-1 bg-linear-to-r from-transparent via-amber-300 to-transparent" />
     </div>
   ),
 };
@@ -159,8 +164,10 @@ export default async function BlogDetailPage({
   const { blogId } = await params;
 
   const post = await getBlogDetails(blogId);
+  // console.log('post', post)
   const description = unescapeMarkdown(post.description);
   const mins = readingTime(post.description);
+  console.log("mins", typeof mins);
   const tocItems = extractTocItems(description); // ✅ dynamic
   const keyBenefits = extractKeyBenefits(description);
 
@@ -333,7 +340,7 @@ export default async function BlogDetailPage({
 }
 
 // ─── Author Card ─────────────────────────────────────────────────────────────
-function AuthorCard({ author, date, mins }) {
+function AuthorCard({ author, date, mins }: AuthorCardProps) {
   return (
     <FadeInFromLeft>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-gray-100 bg-gradient-to-br from-amber-50 to-orange-50 p-5 shadow-md">
@@ -362,7 +369,7 @@ function AuthorCard({ author, date, mins }) {
 }
 
 // ─── Tags Row ─────────────────────────────────────────────────────────────────
-function TagsRow({ tags }) {
+function TagsRow({ tags }: { tags: string[] }) {
   return (
     <FadeInFromLeft>
       <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-gray-100 pt-6">
@@ -381,7 +388,15 @@ function TagsRow({ tags }) {
 }
 
 // ─── Sidebar ─────────────────────────────────────────────────────────────────
-function Sidebar({ tags, tocItems, keyBenefits }) {
+function Sidebar({
+  tags,
+  tocItems,
+  keyBenefits,
+}: {
+  tags: string[];
+  tocItems: string[];
+  keyBenefits: string[];
+}) {
   return (
     <>
       {/* Table of contents */}

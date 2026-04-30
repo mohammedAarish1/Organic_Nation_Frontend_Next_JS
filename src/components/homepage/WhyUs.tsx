@@ -9,10 +9,6 @@ interface Feature {
   description?: string;
 }
 
-interface WhyChooseSectionProps {
-  features: Feature[];
-}
-
 // Trust Badge Component (Server Component)
 const TrustBadge = ({
   type,
@@ -49,7 +45,7 @@ const TrustBadge = ({
 };
 
 // Main Server Component
-export default function WhyUs({ features }: WhyChooseSectionProps) {
+export default function WhyUs() {
   // Default features if none provided
   const defaultFeatures: Feature[] = [
     {
@@ -78,7 +74,7 @@ export default function WhyUs({ features }: WhyChooseSectionProps) {
     },
   ];
 
-  const displayFeatures = features?.length > 0 ? features : defaultFeatures;
+  const displayFeatures = defaultFeatures;
   const badgeTypes: ("quality" | "eco" | "trusted" | "rated")[] = [
     "quality",
     "eco",

@@ -11,12 +11,13 @@ import {
   FILTER_OPTIONS,
   FilterValue,
 } from "@/features/order/utils/orderHistoryUtils";
-import { Product, ProductMap } from "@/features/product/types";
+import { ProductMap } from "@/features/product/types";
+import { Product } from "@/types";
 
 export const FilteredOrderList = memo(function FilteredOrderList() {
   const [filter, setFilter] = useState<FilterValue>("all");
   const { products } = useProducts();
-  const { data: orders, isLoading } = useGetAllOrdersQuery();
+  const { data: orders, isLoading } = useGetAllOrdersQuery(undefined);
 
   // ✅ Built once when products change — O(1) lookups for all child cards
   const productMap = useMemo<ProductMap>(() => {

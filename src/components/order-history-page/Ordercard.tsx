@@ -22,6 +22,7 @@ import ReturnItemForm from "./ReturnItemForm";
 import Image from "next/image";
 import { useCancelOrderMutation } from "@/lib/services/api/ordersApi";
 import { toast } from "react-toastify";
+import { Product } from "@/types";
 
 interface Props {
   order: Order;
@@ -29,7 +30,7 @@ interface Props {
 }
 
 export const OrderCard = memo(function OrderCard({ order, productMap }: Props) {
-  const [curItem, setCurItem] = useState<OrderItem | null>(null);
+  const [curItem, setCurItem] = useState<Product | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
@@ -46,17 +47,17 @@ export const OrderCard = memo(function OrderCard({ order, productMap }: Props) {
   const closeReturn = useCallback(() => setReturnFormVisible(false), []);
   const toggleExpanded = useCallback(() => setIsExpanded((p) => !p), []);
 
-  const handleOpenReview = useCallback((item: OrderItem) => {
+  const handleOpenReview = useCallback((item) => {
     setCurItem(item);
     setShowReviewModal(true);
   }, []);
 
-  const handleOpenReturn = useCallback((item: OrderItem) => {
+  const handleOpenReturn = useCallback((item) => {
     setCurItem(item);
     setReturnFormVisible(true);
   }, []);
 
-  const handleOrderCancel = async (orderId: { orderId: string }) => {
+  const handleOrderCancel = async (orderId: string) => {
     try {
       const result = await cancelOrder(orderId).unwrap();
       toast.info(result?.msg);

@@ -6,7 +6,7 @@ import { Truck, RotateCcw, Shield } from "lucide-react";
 const FeatureIcon = ({ icon: Icon, title, color = "#7A2E1D" }) => (
   <motion.div
     className="xs:p-4 flex flex-col items-center gap-2 rounded-xl bg-white shadow-sm"
-    whileHover={{ y: -4, shadow: "0 8px 16px rgba(0,0,0,0.1)" }}
+    whileHover={{ y: -4, boxShadow: "0 8px 16px rgba(0,0,0,0.1)" }}
   >
     <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-50">
       <Icon size={24} style={{ color }} />

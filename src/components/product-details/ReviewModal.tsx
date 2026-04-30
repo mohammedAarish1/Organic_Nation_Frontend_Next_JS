@@ -10,6 +10,24 @@ import { useAddReviewMutation } from "@/lib/services/api/reviewsApi";
 import Image from "next/image";
 // import Image from "next/image";
 
+interface RatingInputProps {
+  value: number;
+  onChange: (rating: any) => void;
+  disabled: boolean;
+}
+
+interface ImageUploadProps {
+  images: any[];
+  onRemove: (id: any) => void;
+  disabled: boolean;
+}
+
+interface VideoUploadProps {
+  video: any;
+  onRemove: () => void;
+  disabled: boolean;
+}
+
 // Validation Schema
 const reviewSchema = Yup.object().shape({
   rating: Yup.number()
@@ -39,16 +57,18 @@ const reviewSchema = Yup.object().shape({
     .nullable()
     .test("fileSize", "Video must be under 50MB", (file) => {
       if (!file) return true;
-      return file.file.size <= 50 * 1024 * 1024;
+      return (file as any).file.size <= 50 * 1024 * 1024;
     })
     .test("fileType", "Only MP4, WebM, OGG allowed", (file) => {
       if (!file) return true;
-      return ["video/mp4", "video/webm", "video/ogg"].includes(file.file.type);
+      return ["video/mp4", "video/webm", "video/ogg"].includes(
+        (file as any).file.type,
+      );
     }),
 });
 
 // Memoized Star Rating Component
-const StarRating = memo(({ value, onChange, disabled }) => {
+const StarRating = memo(({ value, onChange, disabled }: RatingInputProps) => {
   const [hoveredRating, setHoveredRating] = useState(0);
 
   return (
@@ -79,37 +99,40 @@ const StarRating = memo(({ value, onChange, disabled }) => {
 StarRating.displayName = "StarRating";
 
 // Memoized Image Preview Component
-const ImagePreview = memo(({ images, onRemove, disabled }) => {
-  if (images.length === 0) return null;
+const ImagePreview = memo(
+  ({ images, onRemove, disabled }: ImageUploadProps) => {
+    if (images.length === 0) return null;
 
-  return (
-    <div className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-5">
-      {images.map((img) => (
-        <div key={img.id} className="group relative">
-          <Image
-            src={img.preview}
-            alt="Review preview"
-            width={250}
-            height={96}
-            className="rounded-lg border-2 border-gray-200 object-cover"
-          />
-          <button
-            type="button"
-            onClick={() => onRemove(img.id)}
-            disabled={disabled}
-            className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1.5 text-white shadow-md transition-colors hover:bg-red-600 disabled:opacity-50"
-            aria-label="Remove image"
-          >
-            <X size={14} />
-          </button>
-        </div>
-      ))}
-    </div>
-  );
-});
+    return (
+      <div className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-5">
+        {images.map((img) => (
+          <div key={img.id} className="group relative">
+            <Image
+              src={img.preview}
+              alt="Review preview"
+              width={250}
+              height={96}
+              className="rounded-lg border-2 border-gray-200 object-cover"
+            />
+            <button
+              type="button"
+              onClick={() => onRemove(img.id)}
+              disabled={disabled}
+              className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1.5 text-white shadow-md transition-colors hover:bg-red-600 disabled:opacity-50"
+              aria-label="Remove image"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        ))}
+      </div>
+    );
+  },
+);
 
+ImagePreview.displayName = "ImagePreview";
 // Memoized Video Preview Component
-const VideoPreview = memo(({ video, onRemove, disabled }) => {
+const VideoPreview = memo(({ video, onRemove, disabled }: VideoUploadProps) => {
   if (!video) return null;
 
   return (
@@ -162,14 +185,16 @@ export default function ReviewModal({ isOpen, onClose, productId }) {
       e.target.value = "";
       return;
     }
-
+    console.log("giles", files);
     for (const file of files) {
-      if (file.size > 5 * 1024 * 1024) {
+      if ((file as File).size > 5 * 1024 * 1024) {
         toast.error("Each image must be under 5MB");
         e.target.value = "";
         return;
       }
-      if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      if (
+        !["image/jpeg", "image/png", "image/webp"].includes((file as File).type)
+      ) {
         toast.error("Only JPG, PNG, WebP allowed");
         e.target.value = "";
         return;
@@ -179,7 +204,7 @@ export default function ReviewModal({ isOpen, onClose, productId }) {
     const previews = files.map((file) => ({
       id: crypto.randomUUID(),
       file,
-      preview: URL.createObjectURL(file),
+      preview: URL.createObjectURL(file as any),
     }));
 
     setFieldValue("images", [...currentImages, ...previews]);
@@ -501,7 +526,7 @@ export default function ReviewModal({ isOpen, onClose, productId }) {
                 {/* SUBMIT BUTTON */}
                 <motion.button
                   type="button"
-                  onClick={formikSubmit}
+                  onClick={() => formikSubmit()}
                   disabled={isSubmitting || values.rating === 0}
                   whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                   whileTap={{ scale: isSubmitting ? 1 : 0.98 }}

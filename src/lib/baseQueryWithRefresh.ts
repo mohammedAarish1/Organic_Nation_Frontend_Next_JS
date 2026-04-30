@@ -26,7 +26,7 @@ export const baseQueryWithRefresh: BaseQueryFn<
 
   // Check for token expiration
   if (result.error?.status === 401) {
-    const errorData = result.error.data;
+    const errorData = result.error.data as { code?: string; message?: string };
     if (
       errorData?.code === "TOKEN_EXPIRED" ||
       errorData?.message?.includes("token")

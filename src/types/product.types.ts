@@ -34,6 +34,14 @@ export type Product = {
   updatedAt: string; // or Date if you parse it
   isActive: boolean;
   title: string;
-  quantity: number;
   meta: ProductMeta;
+  productName?: string;
+  quantity?: number;
+  badge?: string;
+  reviewsAndRating?: {
+    rating: number;
+    count: number;
+    averageRating: number;
+    totalReviews: number;
+  };
 };

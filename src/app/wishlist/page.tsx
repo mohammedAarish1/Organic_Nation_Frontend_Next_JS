@@ -78,7 +78,7 @@ export default function Wishlist() {
 
   useEffect(() => {
     if (user) {
-      getWishlistProducts();
+      getWishlistProducts(undefined);
     }
   }, [user]);
 
@@ -174,7 +174,7 @@ export default function Wishlist() {
       <ConfirmationModal
         isOpen={showClearModal}
         onClose={() => setShowClearModal(false)}
-        onConfirm={clearWishList}
+        onConfirm={() => clearWishList(undefined)}
       />
     </div>
   );

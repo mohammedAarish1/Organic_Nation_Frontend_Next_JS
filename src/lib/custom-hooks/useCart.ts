@@ -118,7 +118,7 @@ export const useCart = () => {
   );
 
   const removeFromCart = useCallback(
-    async (productName: { productName: string }) => {
+    async (productName: string) => {
       try {
         if (isAuthenticated) {
           const result = await removeFromCartServer(productName).unwrap();
@@ -140,7 +140,7 @@ export const useCart = () => {
   const clearCart = useCallback(async () => {
     try {
       if (isAuthenticated) {
-        await clearCartServer().unwrap();
+        await clearCartServer(undefined).unwrap();
       } else {
         dispatch(clearLocalCartState());
       }

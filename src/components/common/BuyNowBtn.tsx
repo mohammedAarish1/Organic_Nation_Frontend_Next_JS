@@ -3,8 +3,19 @@ import { useCheckoutModal } from "../providers/CheckoutModalProvider";
 import { toast } from "react-toastify";
 import { useCart } from "@/lib/custom-hooks/useCart";
 import { Loader } from "lucide-react";
+import { Product } from "@/types";
 
-const BuyNowBtn = ({ product, quantity, extraClasses }) => {
+type BuyNowBtnProps = {
+  product: Product;
+  quantity: number;
+  extraClasses?: string;
+};
+
+const BuyNowBtn = ({
+  product,
+  quantity,
+  extraClasses = "",
+}: BuyNowBtnProps) => {
   const { openCheckout } = useCheckoutModal();
   const { addToCart, isAddingToCart, cartItems } = useCart();
 

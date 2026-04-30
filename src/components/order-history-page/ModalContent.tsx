@@ -1,13 +1,14 @@
 import { MapPin, Phone, Mail, RotateCcw } from "lucide-react";
 import { StatusBadge, PaymentBadge } from "./Badges";
-import type { Order, ProductMap } from "../shared/types";
 import { formatDate } from "@/features/order/utils/orderHistoryUtils";
 import Image from "next/image";
+import { Order } from "@/features/order/types";
+import { ProductMap } from "@/features/product/types";
 
 interface Props {
   order: Order;
   productMap: ProductMap;
-  handleOrderCancel: () => {};
+  handleOrderCancel: (orderId) => void;
 }
 
 export function ModalContent({ order, productMap, handleOrderCancel }: Props) {

@@ -38,6 +38,8 @@ interface ReturnItem {
   images: string[];
   video: string;
   createdAt: string;
+  img?: string;
+  title?: string;
 }
 
 // Sample Data
@@ -472,7 +474,7 @@ const ReturnCard = ({ returnItem }: { returnItem: ReturnItem }) => {
 
         {/* Product Details */}
         <div className="p-4 sm:p-6">
-          <div className="flex gap-4 rounded-xl bg-gradient-to-r from-emerald-50/30 to-amber-50/30 p-4">
+          <div className="flex gap-4 rounded-xl bg-linear-to-r from-emerald-50/30 to-amber-50/30 p-4">
             {/* Product Image */}
             <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-white sm:h-28 sm:w-28">
               <Image
@@ -562,7 +564,7 @@ const ReturnCard = ({ returnItem }: { returnItem: ReturnItem }) => {
 // Main Component
 export default function ReturnHistoryPage() {
   const [filter, setFilter] = useState<string>("all");
-  const { data: returns, isLoading } = useGetAllReturnsQuery();
+  const { data: returns, isLoading } = useGetAllReturnsQuery(undefined);
   const filterOptions = [
     { value: "all", label: "All Returns" },
     { value: "requested", label: "Requested" },

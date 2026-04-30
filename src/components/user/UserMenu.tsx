@@ -1,25 +1,28 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+// import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ChevronDown, User as UserIcon } from "lucide-react";
+// import { ChevronDown, User as UserIcon } from "lucide-react";
 
-import { forwardRef } from "react";
+import { Dispatch, forwardRef, RefObject, SetStateAction } from "react";
 import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
-import { Boxes, LogOut, Undo, User } from "lucide-react";
+import { Boxes, LogOut, Undo } from "lucide-react";
+import { User } from "@/types";
 
 // Types
-interface User {
-  fullName?: string;
-  phoneNumber?: string;
-  email?: string;
-}
+// interface User {
+//   fullName?: string;
+//   phoneNumber?: string;
+//   email?: string;
+// }
 
 interface UserMenuProps {
   user: User;
   showMenu: boolean;
-  onLogout: () => void;
+  setShowUserMenu: Dispatch<SetStateAction<boolean>>;
+  menuRef: RefObject<HTMLDivElement>;
+  onLogout: () => Promise<void>;
 }
 
 interface MenuItem {
@@ -69,7 +72,7 @@ const UserMenuItem = ({
   setShowUserMenu,
 }: {
   item: MenuItem;
-  setShowUserMenu: () => {};
+  setShowUserMenu: Dispatch<SetStateAction<boolean>>;
 }) => {
   const Icon = item.icon;
 
@@ -78,10 +81,10 @@ const UserMenuItem = ({
       <Link
         href={item.path}
         onClick={() => setShowUserMenu(false)}
-        className="group flex items-start gap-3 px-6 py-3.5 transition-all hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50"
+        className="group flex items-start gap-3 px-6 py-3.5 transition-all hover:bg-linear-to-r hover:from-amber-50 hover:to-orange-50"
       >
         <span
-          className={`mt-0.5 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${item.iconBg} ${item.iconColor} transition-transform group-hover:scale-110`}
+          className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${item.iconBg} ${item.iconColor} transition-transform group-hover:scale-110`}
         >
           <Icon className="h-5 w-5" />
         </span>
@@ -182,10 +185,10 @@ const UserMenu = forwardRef<HTMLDivElement, UserMenuProps>(
             className="absolute -right-8 z-50 mt-2 w-80 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl sm:right-0"
           >
             {/* Header Section */}
-            <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 px-6 py-5">
+            <div className="bg-linear-to-br from-amber-50 via-orange-50 to-red-50 px-6 py-5">
               <div className="mb-3 flex items-center gap-4">
                 {/* User Avatar */}
-                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-600 to-red-700 shadow-lg">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-amber-600 to-red-700 shadow-lg">
                   <span className="text-2xl font-bold text-white">
                     {userInitial}
                   </span>
@@ -203,7 +206,7 @@ const UserMenu = forwardRef<HTMLDivElement, UserMenuProps>(
               </div>
 
               {/* Decorative Line */}
-              <div className="h-1 w-16 rounded-full bg-gradient-to-r from-amber-600 to-red-700"></div>
+              <div className="h-1 w-16 rounded-full bg-linear-to-r from-amber-600 to-red-700"></div>
             </div>
 
             {/* Menu Items */}
@@ -235,6 +238,7 @@ const UserMenu = forwardRef<HTMLDivElement, UserMenuProps>(
     );
   },
 );
+UserMenu.displayName = "UserMenu";
 
 export default UserMenu;
 

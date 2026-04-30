@@ -10,7 +10,9 @@ export default function AdditionalInfo({ additionalInfo }) {
             <dt className="text-sm font-medium text-gray-500 capitalize">
               {key.replace(/([A-Z])/g, " $1")}:
             </dt>
-            <dd className="text-base font-semibold text-gray-900">{value}</dd>
+            <dd className="text-base font-semibold text-gray-900">
+              {String(value)}
+            </dd>
           </div>
         ))}
       </div>

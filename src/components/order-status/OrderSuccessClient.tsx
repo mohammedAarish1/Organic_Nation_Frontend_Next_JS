@@ -473,7 +473,7 @@ export default function OrderSuccessClient({
 
   const clearUserCart = async () => {
     try {
-      await clearCartServer();
+      await clearCartServer(undefined);
     } catch (error) {
       throw error;
     }
@@ -544,7 +544,8 @@ export default function OrderSuccessClient({
   if (error || !orderData) {
     return (
       <ErrorState
-        message={error || "Order details not found"}
+        // message={error || "Order details not found"}
+        message={typeof error === "string" ? error : "An error occurred"}
         onReturnHome={() => router.push("/")}
       />
     );

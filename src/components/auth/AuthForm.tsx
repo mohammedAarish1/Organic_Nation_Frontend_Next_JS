@@ -188,7 +188,7 @@ const AuthForm = ({ isCheckout }) => {
   const handleOtpVerification = async (
     otp: string,
     setError: React.Dispatch<React.SetStateAction<string | null>>,
-  ) => {
+  ): Promise<boolean> => {
     try {
       const result = await verifyOtp({ phoneNumber, otp }).unwrap();
       if (result?.success) {
@@ -200,6 +200,8 @@ const AuthForm = ({ isCheckout }) => {
         // action();
         router.push("/");
       }
+      return true;
+
       // Cookie is automatically set by backend
       // Redux state is automatically updated via extraReducers
       // onClose();
@@ -210,6 +212,7 @@ const AuthForm = ({ isCheckout }) => {
       if (error) {
         setError(error.data.message);
       }
+      return false;
     }
   };
 

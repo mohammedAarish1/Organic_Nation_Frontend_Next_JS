@@ -331,7 +331,6 @@ export function PulseRing({ children, className = "" }: MotionWrapperProps) {
 // ─────────────────────────────────────────────
 // 13. FLOAT — hero product images, feature illustrations
 // Gentle infinite floating effect
-// Usage: <FloatEffect><ProductImage /></FloatEffect>
 // ─────────────────────────────────────────────
 export function FloatEffect({ children, className = "" }: MotionWrapperProps) {
   return (

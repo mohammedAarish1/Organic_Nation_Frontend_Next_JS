@@ -1,24 +1,26 @@
-import { MongoID } from "@/types/common";
+// import { MongoID } from "@/types/common";
 
-export interface ProductImage {
-  blur: string;
-  sm: string;
-  md: string;
-  lg: string;
-}
+import { Product } from "@/types";
 
-export interface Product {
-  _id: MongoID;
-  product_id: number;
-  name: string;
-  "name-url": string;
-  "category-url"?: string;
-  weight: string;
-  price: number;
-  discount: number;
-  category: string;
-  img: ProductImage[]; // ✅ named interface, not inline array
-}
+// export interface ProductImage {
+//   blur: string;
+//   sm: string;
+//   md: string;
+//   lg: string;
+// }
+
+// export interface Product {
+//   _id: MongoID;
+//   product_id: number;
+//   name: string;
+//   "name-url": string;
+//   "category-url"?: string;
+//   weight: string;
+//   price: number;
+//   discount: number;
+//   category: string;
+//   img: ProductImage[]; // ✅ named interface, not inline array
+// }
 
 // ── Utility types ─────────────────────────────────────────────────────────────
 

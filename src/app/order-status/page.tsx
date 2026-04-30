@@ -19,13 +19,13 @@ export const metadata: Metadata = {
 export default async function OrderSuccessPage({ searchParams }: PageProps) {
   const { status, retryToken, error: urlError } = await searchParams;
   // Determine order status from URL params
-  let orderStatus: "success" | "failure" | "error" = "success";
+  let orderStatus: "confirmed" | "failure" | "error" = "confirmed";
   if (status === "failure") orderStatus = "failure";
   if (urlError) orderStatus = "error";
 
   return (
     <OrderSuccessClient
-      orderStatus={status}
+      orderStatus={orderStatus}
       retryToken={retryToken}
       paymentStatus={status}
     />
