@@ -51,9 +51,19 @@ async function apiClient<T>(
 // Export typed functions with proper caching
 export async function getProductsAndCategories() {
   // Cache for 1 hour (3600 seconds) - adjust as needed
-  return apiClient<{ products: any[]; categoryList: Category[] }>("/products", {
-    revalidate: 3600,
-  });
+  // return apiClient<{ products: any[]; categoryList: Category[] }>("/products", {
+  //   revalidate: 3600,
+  // });
+
+  try {
+    return await apiClient<{ products: any[]; categoryList: Category[] }>(
+      "/products",
+      { revalidate: 3600 },
+    );
+  } catch {
+    // Return empty fallback so layout never crashes
+    return { products: [], categoryList: [] };
+  }
 }
 
 export async function getCategories() {

@@ -1,17 +1,17 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { FloatingBackground } from "../animations/animation2";
+import { motion } from "framer-motion";
+// import { FloatingBackground } from "../animations/animation2";
 
 // Hero Banner Component
 const HeroBanner = () => {
   return (
-    <section className="relative h-[60vh] w-full overflow-hidden bg-gradient-to-br from-amber-600 via-orange-500 to-red-600">
+    <section className="relative h-[60vh] w-full overflow-hidden bg-linear-to-br from-amber-600 via-orange-500 to-red-600">
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/40" />
+      <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/20 to-black/40" />
 
       {/* Animated Background Pattern */}
-      <FloatingBackground />
+      {/* <FloatingBackground /> */}
 
       {/* Content */}
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center text-white">

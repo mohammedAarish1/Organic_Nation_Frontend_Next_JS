@@ -17,6 +17,7 @@ import VideoSection from "@/components/product-details/VideoSection";
 import { Metadata } from "next";
 import { cache } from "react";
 import JsonLd from "@/components/JsonLd";
+import { API_BASE_URL } from "@/constants";
 
 // This would come from your API/database
 
@@ -25,12 +26,10 @@ type Params = {
   productId: string;
 };
 
-const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
-console.log("baseURL", baseURL);
 const getProductDetails = cache(async (productId: string) => {
   try {
     const response = await axios.get(
-      `${baseURL}/products/product/details/${productId}`,
+      `${API_BASE_URL}/products/product/details/${productId}`,
     );
     if (response.status === 200) {
       return response.data;
