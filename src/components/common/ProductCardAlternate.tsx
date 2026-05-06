@@ -55,7 +55,7 @@ const ProductCardAlternate = ({ item, idx }) => {
         </span>
 
         {/* Quick Actions */}
-        <div className="absolute right-3 bottom-3 left-3 flex gap-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <div className="absolute right-3 bottom-3 left-3 flex gap-2 transition-opacity duration-300">
           <AddToCartBtn
             product={item}
             quantity={1}

@@ -37,7 +37,7 @@ interface SearchComponentProps {
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const TRENDING: string[] = [
-  "Home-style Pickles",
+  "Homestyle Pickles",
   "Organic Honey",
   "Organic Oils",
   "Oats",
@@ -235,7 +235,8 @@ export default function SearchButton({
     if (!q.trim()) return;
     pushHistory(q);
     closeSearch();
-    router.push(`/shop/all?q=${encodeURIComponent(q)}`);
+    // router.push(`/shop/all?q=${encodeURIComponent(q)}`);
+    router.push(`/shop/${q.toLowerCase().trim().replace(" ", "-")}`);
   };
 
   const showEmpty = !loading && debouncedQuery && suggestions.length === 0;

@@ -74,8 +74,6 @@ export default function CartNotification() {
   } = useCart();
   const lastAddedItem = cartItems[0];
 
-  console.log("cart items", cartItems);
-
   useEffect(() => {
     refreshCart();
   }, [isAuthenticated, totalCartItems]);

@@ -68,7 +68,6 @@ export default function ReviewsSection({
   }, [data?.reviews]);
 
   // const tags = getReviewFilterTags(categoryUrl)||[];
-
   // Filter reviews
   const filteredReviews = useMemo(() => {
     return data?.reviews.filter((review) => {
@@ -209,9 +208,9 @@ export default function ReviewsSection({
                   (tag) => (
                     <button
                       key={tag}
-                      onClick={() => setSelectedTagFilter(tag)}
+                      onClick={() => setSelectedTagFilter(tag.toLowerCase())}
                       className={`rounded-lg px-4 py-2 font-medium transition-colors ${
-                        selectedTagFilter === tag
+                        selectedTagFilter === tag.toLowerCase()
                           ? "bg-orange-500 text-white"
                           : "border border-gray-300 bg-white text-gray-700 hover:bg-gray-100"
                       }`}

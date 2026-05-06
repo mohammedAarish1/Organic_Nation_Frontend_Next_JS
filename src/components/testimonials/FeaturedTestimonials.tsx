@@ -2,45 +2,45 @@
 "use client";
 
 import { useState } from "react";
-import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, Quote, ChevronLeft, ChevronRight, User2 } from "lucide-react";
 import Image from "next/image";
 import { FadeInView, ShimmerReveal } from "@/components/animations/animations";
 
-const FeaturedTestimonials = () => {
+const FeaturedTestimonials = ({ feturedReviews: testimonials }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const testimonials = [
-    {
-      id: 1,
-      name: "Priya Sharma",
-      location: "Delhi",
-      image: "https://i.pravatar.cc/150?img=1",
-      rating: 5,
-      text: "The organic honey from Organic Nation is absolutely pure! You can taste the difference. My family has been using it for 6 months now and we won't switch to any other brand. The packaging is excellent and delivery is always on time.",
-      product: "Organic Honey",
-      verified: true,
-    },
-    {
-      id: 2,
-      name: "Rajesh Kumar",
-      location: "Mumbai",
-      image: "https://i.pravatar.cc/150?img=12",
-      rating: 5,
-      text: "These homestyle pickles remind me of my grandmother's recipes! Authentic taste, no preservatives, and made with love. I've ordered multiple times and gifted to friends too. Highly recommended for anyone who loves traditional flavors.",
-      product: "Homestyle Pickles",
-      verified: true,
-    },
-    {
-      id: 3,
-      name: "Sneha Patel",
-      location: "Bangalore",
-      image: "https://i.pravatar.cc/150?img=5",
-      rating: 5,
-      text: "As a health-conscious person, finding truly organic products is challenging. Organic Nation delivers on their promise. The oats are fresh, the quality is consistent, and I love supporting a brand that cares about sustainability.",
-      product: "Organic Oats",
-      verified: true,
-    },
-  ];
+  // const testimonials = [
+  //   {
+  //     id: 1,
+  //     name: "Priya Sharma",
+  //     location: "Delhi",
+  //     image: "https://i.pravatar.cc/150?img=1",
+  //     rating: 5,
+  //     text: "The organic honey from Organic Nation is absolutely pure! You can taste the difference. My family has been using it for 6 months now and we won't switch to any other brand. The packaging is excellent and delivery is always on time.",
+  //     product: "Organic Honey",
+  //     verified: true,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Rajesh Kumar",
+  //     location: "Mumbai",
+  //     image: "https://i.pravatar.cc/150?img=12",
+  //     rating: 5,
+  //     text: "These homestyle pickles remind me of my grandmother's recipes! Authentic taste, no preservatives, and made with love. I've ordered multiple times and gifted to friends too. Highly recommended for anyone who loves traditional flavors.",
+  //     product: "Homestyle Pickles",
+  //     verified: true,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Sneha Patel",
+  //     location: "Bangalore",
+  //     image: "https://i.pravatar.cc/150?img=5",
+  //     rating: 5,
+  //     text: "As a health-conscious person, finding truly organic products is challenging. Organic Nation delivers on their promise. The oats are fresh, the quality is consistent, and I love supporting a brand that cares about sustainability.",
+  //     product: "Organic Oats",
+  //     verified: true,
+  //   },
+  // ];
 
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
@@ -53,7 +53,7 @@ const FeaturedTestimonials = () => {
   };
 
   return (
-    <section className="bg-gradient-to-b from-white to-emerald-50/30 px-4 py-16 sm:px-6 lg:px-8">
+    <section className="bg-linear-to-b from-white to-emerald-50/30 px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <FadeInView>
@@ -61,7 +61,7 @@ const FeaturedTestimonials = () => {
             <h2 className="text-secondary mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
               Featured Stories
             </h2>
-            <div className="mx-auto h-1 w-16 bg-gradient-to-r from-amber-600 to-orange-600" />
+            <div className="mx-auto h-1 w-16 bg-linear-to-r from-amber-600 to-orange-600" />
           </div>
         </FadeInView>
         {/* Carousel */}
@@ -85,7 +85,7 @@ const FeaturedTestimonials = () => {
 
           {/* Testimonial Card */}
           <ShimmerReveal delay={0.5}>
-            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-amber-50 p-8 shadow-2xl sm:p-12">
+            <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-white to-amber-50 p-8 shadow-2xl sm:p-12">
               {/* Quote Icon */}
               <div className="absolute top-8 right-8 opacity-10">
                 <Quote className="h-24 w-24 text-amber-600 sm:h-32 sm:w-32" />
@@ -104,19 +104,19 @@ const FeaturedTestimonials = () => {
 
                 {/* Text */}
                 <p className="mb-8 text-lg leading-relaxed text-gray-700 sm:text-xl">
-                  {testimonials[currentIndex].text}
+                  {testimonials[currentIndex].review}
                 </p>
 
                 {/* Product Badge */}
                 <div className="mb-6 inline-block rounded-full bg-linear-to-r from-amber-100 to-orange-100 px-4 py-2">
                   <span className="text-sm font-semibold text-amber-800">
-                    {testimonials[currentIndex].product}
+                    {testimonials[currentIndex].productName.replace("-", " ")}
                   </span>
                 </div>
 
                 {/* Author */}
                 <div className="flex items-center gap-4">
-                  <div className="relative h-16 w-16 overflow-hidden rounded-full ring-4 ring-amber-200">
+                  <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full ring-4 ring-amber-200">
                     {/* <Image
                       src={testimonials[currentIndex].image}
                       alt={testimonials[currentIndex].name}
@@ -124,11 +124,12 @@ const FeaturedTestimonials = () => {
                       className="object-cover"
                       sizes="64px"
                     /> */}
+                    <User2 size={35} color="gray" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
                       <h4 className="text-secondary text-lg font-bold">
-                        {testimonials[currentIndex].name}
+                        {testimonials[currentIndex].userName}
                       </h4>
                       {testimonials[currentIndex].verified && (
                         <div className="rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-700">

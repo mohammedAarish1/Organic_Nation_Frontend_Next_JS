@@ -37,7 +37,7 @@ export default function ProductCard({
     >
       <Link
         href={`/shop/${product["category-url"]?.toLowerCase()}/${product["name-url"]}`}
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-1"
         aria-label={`View ${product.name}`}
       />
       {/* Badge */}
@@ -97,7 +97,7 @@ export default function ProductCard({
         </span>
 
         {/* Product Name */}
-        <h3 className="text-secondary mb-1 line-clamp-2 text-xs font-bold sm:mb-2 sm:text-lg">
+        <h3 className="text-secondary mb-1 line-clamp-1 text-xs font-bold sm:mb-2 sm:text-lg">
           {product.name}
         </h3>
 

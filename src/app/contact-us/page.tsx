@@ -10,6 +10,7 @@ export default function ContactUsPage() {
       details: "+919310840400",
       subtext: "Mon-Sat, 9AM-6PM IST",
       gradient: "from-amber-100 to-orange-100",
+      href: "tel:+919310840400",
     },
     {
       icon: Mail,
@@ -17,6 +18,7 @@ export default function ContactUsPage() {
       details: "info@organicnation.co.in",
       subtext: "We reply within 24 hours",
       gradient: "from-green-100 to-emerald-100",
+      href: "mailto:info@organicnation.co.in",
     },
     {
       icon: MapPin,
@@ -24,6 +26,7 @@ export default function ContactUsPage() {
       details: "Organic Nation HQ",
       subtext: "Noida, UP, India",
       gradient: "from-yellow-100 to-amber-100",
+      href: null,
     },
   ];
 
@@ -64,8 +67,10 @@ export default function ContactUsPage() {
             {contactInfo.map((info, idx) => {
               const Icon = info.icon;
               return (
-                <div
+                <Link
                   key={idx}
+                  href={info.href ?? "#"}
+                  // onClick={!info.href ? (e) => e.preventDefault() : undefined}
                   className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                 >
                   <div
@@ -89,7 +94,7 @@ export default function ContactUsPage() {
 
                     <p className="text-sm text-gray-500">{info.subtext}</p>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>
@@ -130,7 +135,7 @@ export default function ContactUsPage() {
                 <div className="space-y-2 text-gray-700">
                   <div className="flex justify-between">
                     <span className="font-medium">Monday - Saturday:</span>
-                    <span>9:30 AM - 6:00 PM</span>
+                    <span>10:00 AM - 5:30 PM</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Sunday:</span>

@@ -69,7 +69,7 @@ export default function CheckDeliveryAvailability() {
               placeholder="Enter 6-digit pincode"
               maxLength={6}
               disabled={isLoading}
-              className={`w-full rounded-lg border px-4 py-2.5 transition-all focus:ring-2 focus:outline-none ${
+              className={`w-full rounded-lg border px-4 py-2.5 text-black transition-all focus:ring-2 focus:outline-none ${
                 error && touched
                   ? "border-red-500 focus:ring-red-500"
                   : "border-gray-300 focus:border-transparent focus:ring-orange-500"

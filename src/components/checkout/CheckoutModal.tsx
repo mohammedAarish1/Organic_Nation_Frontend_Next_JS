@@ -96,7 +96,7 @@ const CartItem = ({ item, index }: { item: CartItem; index: number }) => {
       transition={{ delay: 0.05 * index }}
       className="flex items-center gap-3 border-b border-gray-200 pb-3 last:border-b-0 last:pb-0"
     >
-      <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-gray-50">
+      <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-gray-50">
         <Image
           src={item.img[0].lg}
           alt={item.name}
@@ -259,7 +259,7 @@ export default function CheckoutModal(
             </button>
 
             {/* Header */}
-            <div className="border-b border-gray-200 bg-gradient-to-r from-amber-50 to-orange-50 px-6 py-6">
+            <div className="border-b border-gray-200 bg-linear-to-r from-amber-50 to-orange-50 px-6 py-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="relative h-12 w-12">
@@ -302,7 +302,7 @@ export default function CheckoutModal(
 
               {/* Checkout Steps */}
               <AnimatePresence mode="wait">
-                {step === 1 && !phoneVerified && (
+                {!user && (
                   <motion.div
                     key="login"
                     initial={{ opacity: 0, x: -20 }}
@@ -325,7 +325,7 @@ export default function CheckoutModal(
                   </motion.div>
                 )}
 
-                {step === 2 && phoneVerified && (
+                {user && (
                   <motion.div
                     key="checkout"
                     initial={{ opacity: 0, x: -20 }}

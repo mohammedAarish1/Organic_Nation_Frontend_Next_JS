@@ -59,7 +59,7 @@ export const MobileMenu = memo(function MobileMenu() {
             role="navigation"
             aria-label="Mobile navigation"
           >
-            <div className="max-h-[70vh] space-y-4 overflow-y-auto px-4 py-6">
+            <div className="h-screen space-y-4 overflow-y-auto px-4 py-6">
               {NAV_LINKS.map((item) => (
                 <Link
                   key={item.label}

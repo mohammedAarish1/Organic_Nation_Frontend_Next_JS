@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 // Animated Section Component
@@ -15,8 +14,8 @@ const AnimatedSection = ({ section, index }) => {
       ref={ref}
       className={`overflow-hidden rounded-3xl ${
         index % 2 === 0
-          ? "bg-gradient-to-br from-amber-50 to-orange-50"
-          : "bg-gradient-to-br from-emerald-50 to-teal-50"
+          ? "bg-linear-to-br from-amber-50 to-orange-50"
+          : "bg-linear-to-br from-emerald-50 to-teal-50"
       } shadow-xl`}
     >
       <div
@@ -52,16 +51,16 @@ const AnimatedSection = ({ section, index }) => {
           <h3 className="text-secondary mb-4 text-2xl font-bold sm:text-3xl lg:text-4xl">
             {section.title}
           </h3>
-          <div className="mb-6 h-1 w-12 bg-gradient-to-r from-amber-600 to-orange-600" />
+          <div className="mb-6 h-1 w-12 bg-linear-to-r from-amber-600 to-orange-600" />
           <p className="mb-6 text-base leading-relaxed text-gray-700 sm:text-lg">
             {section.content}
           </p>
 
           {/* Decorative Element */}
-          <div className="flex items-center gap-2 text-sm font-semibold text-amber-700">
+          {/* <div className="flex items-center gap-2 text-sm font-semibold text-amber-700">
             <span>Learn More</span>
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </div>
+          </div> */}
         </motion.div>
       </div>
     </div>

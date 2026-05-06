@@ -1,5 +1,4 @@
-import { Star, Heart, ShoppingBag, Users } from "lucide-react";
-import Image from "next/image";
+import { Star, Heart, ShoppingBag, Users, User2Icon } from "lucide-react";
 import {
   FadeInFromLeft,
   FadeInFromRight,
@@ -8,15 +7,42 @@ import {
 } from "@/components/animations/animations";
 import { FadeInView } from "@/components/animations/animation2";
 import FeaturedTestimonials from "@/components/testimonials/FeaturedTestimonials";
+// import SocialMediaReviews from "@/components/testimonials/SocialMediaReviews";
+import axios from "axios";
+import { API_BASE_URL } from "@/constants";
+import VideoPlayer from "@/components/common/VideoPlayer";
+// import SocialDMReviews from "@/components/testimonials/SocialDMReviews";
+import Link from "next/link";
 
-export default function TestimonialsPage() {
+const getAllReviews = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/reviews`);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    if (error) {
+      return error.message;
+    }
+  }
+};
+
+export default async function TestimonialsPage() {
+  const reviews = await getAllReviews();
+
+  const feturedReviews = reviews.filter((r) => r.reviewTag === "featured");
+  const topPicksReviews = reviews.filter((r) => r.reviewTag === "top_picks");
   return (
     <div className="min-h-screen bg-linear-to-b from-white via-amber-50/30 to-white">
       <HeroSection />
       <StatsSection />
-      <FeaturedTestimonials />
-      <TestimonialGrid />
+      <FeaturedTestimonials feturedReviews={feturedReviews} />
+      <TestimonialGrid topPicksReviews={topPicksReviews} />
       <VideoTestimonials />
+      {/* <SocialMediaReviews /> */}
+      {/* <SocialDMReviews/> */}
       <CTASection />
     </div>
   );
@@ -129,58 +155,7 @@ const StatsSection = () => {
 };
 
 // Testimonial Grid
-const TestimonialGrid = () => {
-  const testimonials = [
-    {
-      name: "Amit Verma",
-      location: "Pune",
-      image: "https://i.pravatar.cc/150?img=13",
-      rating: 5,
-      text: "Best quality organic products I've found online. The tea is aromatic and fresh!",
-      product: "Organic Tea",
-    },
-    {
-      name: "Kavita Singh",
-      location: "Jaipur",
-      image: "https://i.pravatar.cc/150?img=9",
-      rating: 5,
-      text: "Love the vegan options! Great taste and texture. Perfect for my family.",
-      product: "Vegan Products",
-    },
-    {
-      name: "Rohit Malhotra",
-      location: "Hyderabad",
-      image: "https://i.pravatar.cc/150?img=14",
-      rating: 5,
-      text: "The chutneys are incredible! Spicy, tangy, and absolutely delicious.",
-      product: "Chutneys",
-    },
-    {
-      name: "Ananya Reddy",
-      location: "Chennai",
-      image: "https://i.pravatar.cc/150?img=26",
-      rating: 5,
-      text: "Organic oils are pure and cold-pressed. You can see the quality difference.",
-      product: "Organic Oils",
-    },
-    {
-      name: "Vikram Joshi",
-      location: "Kolkata",
-      image: "https://i.pravatar.cc/150?img=15",
-      rating: 5,
-      text: "Excellent packaging and delivery. Products arrived fresh and well-sealed.",
-      product: "Multiple Products",
-    },
-    {
-      name: "Meera Iyer",
-      location: "Ahmedabad",
-      image: "https://i.pravatar.cc/150?img=24",
-      rating: 5,
-      text: "The sweeteners are a healthy alternative. Great for my diabetic father!",
-      product: "Sweeteners",
-    },
-  ];
-
+const TestimonialGrid = ({ topPicksReviews }) => {
   return (
     <section className="px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
@@ -190,19 +165,19 @@ const TestimonialGrid = () => {
             <h2 className="text-secondary mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
               More Happy Customers
             </h2>
-            <div className="mx-auto h-1 w-16 bg-gradient-to-r from-amber-600 to-orange-600" />
+            <div className="mx-auto h-1 w-16 bg-linear-to-r from-amber-600 to-orange-600" />
           </div>
         </FadeInView>
         {/* Grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {testimonials.map((testimonial, index) => (
+          {topPicksReviews.map((testimonial, index) => (
             <ShimmerReveal delay={0.7} key={index}>
               <div
                 key={index}
                 className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-lg transition-all hover:shadow-2xl"
               >
                 {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-100 to-orange-100 opacity-0 transition-opacity duration-300 group-hover:opacity-30" />
+                <div className="absolute inset-0 bg-linear-to-br from-amber-100 to-orange-100 opacity-0 transition-opacity duration-300 group-hover:opacity-30" />
 
                 <div className="relative z-10">
                   {/* Rating */}
@@ -216,18 +191,18 @@ const TestimonialGrid = () => {
                   </div>
 
                   {/* Text */}
-                  <p className="mb-4 text-gray-700">{testimonial.text}</p>
+                  <p className="mb-4 text-gray-700">{testimonial.review}</p>
 
                   {/* Product Badge */}
                   <div className="mb-4 inline-block rounded-full bg-amber-100 px-3 py-1">
                     <span className="text-xs font-semibold text-amber-800">
-                      {testimonial.product}
+                      {testimonial.productName}
                     </span>
                   </div>
 
                   {/* Author */}
                   <div className="flex items-center gap-3">
-                    <div className="relative h-12 w-12 overflow-hidden rounded-full ring-2 ring-amber-200">
+                    <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full ring-2 ring-amber-200">
                       {/* <Image
                       src={testimonial.image}
                       alt={testimonial.name}
@@ -235,10 +210,11 @@ const TestimonialGrid = () => {
                       className="object-cover"
                       sizes="48px"
                     /> */}
+                      <User2Icon size={30} color="gray" />
                     </div>
                     <div>
                       <h4 className="text-secondary font-bold">
-                        {testimonial.name}
+                        {testimonial.userName}
                       </h4>
                       <p className="text-xs text-gray-600">
                         {testimonial.location}
@@ -257,8 +233,12 @@ const TestimonialGrid = () => {
 
 // Video Testimonials
 const VideoTestimonials = () => {
+  const videos = [
+    "https://organicnationmages.s3.ap-south-1.amazonaws.com/product-detail-page-videos/Vinni_Review.MP4",
+    "https://organicnationmages.s3.ap-south-1.amazonaws.com/product-detail-page-videos/Honey_A_Reveiew.MOV",
+  ];
   return (
-    <section className="bg-gradient-to-b from-white to-emerald-50/30 px-4 py-16 sm:px-6 lg:px-8">
+    <section className="bg-linear-to-b from-white to-emerald-50/30 px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <FadeInView>
@@ -266,7 +246,7 @@ const VideoTestimonials = () => {
             <h2 className="text-secondary mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
               Video Reviews
             </h2>
-            <div className="mx-auto mb-6 h-1 w-16 bg-gradient-to-r from-amber-600 to-orange-600" />
+            <div className="mx-auto mb-6 h-1 w-16 bg-linear-to-r from-amber-600 to-orange-600" />
             <p className="text-lg text-gray-700">
               See what our customers have to say on video
             </p>
@@ -275,25 +255,29 @@ const VideoTestimonials = () => {
 
         {/* Video Grid */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {[1, 2, 3].map((item, index) => (
-            <ShimmerReveal delay={0.7} key={item}>
+          {videos.map((src, index) => (
+            <ShimmerReveal delay={0.7} key={src}>
               <div
                 key={index}
-                className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 shadow-lg transition-all hover:shadow-2xl"
+                className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-gray-100 to-gray-200 shadow-lg transition-all hover:shadow-2xl"
               >
-                <div className="aspect-video w-full">
+                <div className="w-full">
                   <div className="flex h-full items-center justify-center">
-                    <div className="rounded-full bg-white p-6 shadow-xl transition-transform group-hover:scale-110">
-                      <div
-                        className="h-12 w-12 border-t-8 border-l-8 border-amber-600"
-                        style={{ borderRadius: "0 50% 50% 0" }}
-                      />
-                    </div>
+                    {/* <VideoPlayer
+                      src={src}
+                      poster="/images/pickle.jpg"
+                      blurDataURL="/images/pickle-blur.jpg"
+                      autoPlay={false}
+                      loop={true}
+                      className="mx-auto max-w-2xl"
+                    /> */}
+
+                    <VideoPlayer src={src} />
                   </div>
                 </div>
                 <div className="p-4">
                   <p className="text-center text-sm font-semibold text-gray-700">
-                    Customer Review #{item}
+                    Customer Review #{index}
                   </p>
                 </div>
               </div>
@@ -317,9 +301,12 @@ const CTASection = () => {
           <p className="mb-8 text-lg opacity-90">
             Experience the organic difference. Shop now and share your story!
           </p>
-          <button className="rounded-full bg-white px-8 py-4 font-bold text-amber-700 shadow-xl transition-all hover:scale-105 hover:shadow-2xl">
+          <Link
+            href="/shop/all"
+            className="rounded-full bg-white px-8 py-4 font-bold text-amber-700 shadow-xl transition-all hover:scale-105 hover:shadow-2xl"
+          >
             Start Shopping
-          </button>
+          </Link>
         </div>
       </FadeInView>
     </section>

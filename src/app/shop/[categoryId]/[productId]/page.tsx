@@ -35,7 +35,7 @@ const getProductDetails = cache(async (productId: string) => {
       return response.data;
     }
   } catch (error) {
-    throw error;
+    return null;
   }
 });
 
@@ -46,6 +46,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { productId } = await params;
   const productData = await getProductDetails(productId);
+  if (!productData) return;
   const { seoData } = productData;
 
   if (!seoData) return;
@@ -72,6 +73,16 @@ export async function generateMetadata({
 export default async function ProductDetails({ params }: { params: Params }) {
   const { categoryId, productId } = await params;
   const productData = await getProductDetails(productId);
+
+  if (!productData) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-lg text-gray-500">
+          Product is currently unavailable. Please try again later.
+        </p>
+      </div>
+    );
+  }
   const { details, reviews, averageRating, seoData, productInfo } = productData;
   // const product = mockProduct;
   const finalPrice = Math.round(
@@ -179,7 +190,7 @@ export default async function ProductDetails({ params }: { params: Params }) {
           <ProductDescriptionSection productInfo={productData.productInfo} />
 
           {/* Lab Certification (Server) */}
-          <LabCertification />
+          {/* <LabCertification /> */}
 
           {/* Product Gallery Grid (Server) */}
           {productInfo?.additionalImages.length > 0 && (

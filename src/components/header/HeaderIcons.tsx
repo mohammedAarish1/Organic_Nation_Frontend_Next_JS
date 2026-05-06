@@ -31,7 +31,6 @@ export const HeaderIcons = memo(function HeaderIcons() {
     () => setShowUserMenu((prev) => !prev),
     [],
   );
-  console.log("userr", user);
 
   // Close on outside click
   useEffect(() => {

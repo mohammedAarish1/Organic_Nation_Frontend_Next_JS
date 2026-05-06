@@ -25,9 +25,8 @@ async function getBlogs() {
   try {
     const res = await fetch(`${API_BASE_URL}/api/blogs`, {
       // Revalidate every 1 hour
-      next: { revalidate: 3600 },
+      // next: { revalidate: 10 },
     });
-
     if (!res.ok) {
       throw new Error("Failed to fetch blogs");
     }

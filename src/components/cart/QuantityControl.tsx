@@ -67,7 +67,7 @@ export const QuantityControl = ({
       >
         <Minus className="h-4 w-4 text-gray-600" />
       </button>
-      <span className="w-16 border-x border-gray-300 px-6 py-2 text-center font-bold">
+      <span className="w-16 border-x border-gray-300 px-6 py-2 text-center font-bold text-black">
         {quantity}
       </span>
       <button

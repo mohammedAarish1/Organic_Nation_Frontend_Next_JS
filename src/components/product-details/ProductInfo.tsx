@@ -24,6 +24,7 @@ import { useLazyCheckDeliveryAvailabilityQuery } from "@/lib/services/api/orders
 import CheckDeliveryAvailability from "./CheckDeliveryAvailability";
 import { QuantityControl } from "../cart/QuantityControl";
 import { freeShippingEligibleAmt } from "../../constants";
+import { useRouter } from "next/navigation";
 
 const offers = [
   // {
@@ -39,6 +40,7 @@ const offers = [
     code: null,
     highlight: true,
     category: "Organic Honey",
+    path: "/shop/gifts-&-combos",
   },
   {
     tag: "BANK",
@@ -46,6 +48,7 @@ const offers = [
     code: null,
     highlight: false,
     category: "all",
+    path: "",
   },
   // {
   //   tag: "COUPON",
@@ -92,9 +95,10 @@ const StarRating = ({ rating, size = 20 }) => {
 };
 
 export default function ProductInfo({ product, finalPrice }) {
+  const router = useRouter();
   const [qty, setQty] = useState(1);
-  const [checkDeliveryAvailability, { data, isLoading }] =
-    useLazyCheckDeliveryAvailabilityQuery();
+  // const [checkDeliveryAvailability, { data, isLoading }] =
+  //   useLazyCheckDeliveryAvailabilityQuery();
   const actionButtonRef = useRef(null);
   const pricePerGram = useMemo(() => {
     const weightMatch = product.details.weight.match(/(\d+)/);
@@ -248,10 +252,18 @@ export default function ProductInfo({ product, finalPrice }) {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.1 }}
                 whileHover={{ scale: 1.05 }}
+                onClick={
+                  offer.path
+                    ? () => {
+                        router.push(`${offer.path}`);
+                      }
+                    : undefined
+                }
+                // onClick={offer.path}
                 className={`flex h-20 w-72 min-w-32 cursor-pointer flex-col items-center rounded-lg p-1 transition-all ${
                   offer.highlight
-                    ? "border-2 border-orange-300 bg-gradient-to-r from-orange-50 to-yellow-50 shadow-md"
-                    : "border border-green-200 bg-gradient-to-r from-green-50 to-emerald-50"
+                    ? "border-2 border-orange-300 bg-linear-to-r from-orange-50 to-yellow-50 shadow-md"
+                    : "border border-green-200 bg-linear-to-r from-green-50 to-emerald-50"
                 }`}
               >
                 <motion.span
@@ -261,7 +273,7 @@ export default function ProductInfo({ product, finalPrice }) {
                     repeat: Infinity,
                     repeatDelay: 2,
                   }}
-                  className={`flex-shrink-0 rounded-full px-2 py-0.5 text-xs font-bold text-white ${
+                  className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-bold text-white ${
                     offer.highlight ? "bg-orange-500" : "bg-green-600"
                   }`}
                 >
@@ -329,25 +341,6 @@ export default function ProductInfo({ product, finalPrice }) {
           <div className="mb-4 flex items-center gap-4">
             <span className="font-semibold text-gray-700">Quantity:</span>
             <QuantityControl quantity={qty} setQuantity={setQty} />
-            {/* <div className="flex items-center overflow-hidden rounded-xl border border-gray-300">
-              <motion.button
-                onClick={() => setQty(Math.max(1, qty - 1))}
-                className="px-4 py-2 transition-colors hover:bg-gray-100"
-                whileTap={{ scale: 0.95 }}
-              >
-                <Minus size={18} />
-              </motion.button>
-              <span className="w-16 border-x border-gray-300 px-6 py-2 text-center font-bold">
-                {qty}
-              </span>
-              <motion.button
-                onClick={() => setQty(qty + 1)}
-                className="px-4 py-2 transition-colors hover:bg-gray-100"
-                whileTap={{ scale: 0.95 }}
-              >
-                <Plus size={18} />
-              </motion.button>
-            </div> */}
           </div>
 
           <div className="w-full space-y-3 sm:space-y-0">

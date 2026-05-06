@@ -29,7 +29,7 @@ const companyLinks = [
 
 // Quick links
 const quickLinks = [
-  { href: "/our-recipes", label: "Recipes" },
+  // { href: "/our-recipes", label: "Recipes" },
   { href: "/frequently-asked-questions", label: "FAQ's" },
   { href: "/privacy-policy", label: "Privacy Policy" },
   { href: "/terms-and-conditions/introduction", label: "Terms & Conditions" },

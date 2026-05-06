@@ -103,6 +103,17 @@ function readingTime(text: string) {
   return Math.ceil(text.replace(/[#*`_]/g, "").split(/\s+/).length / 200);
 }
 
+export function slugify(text: string): string {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\*\*/g, "") // remove bold markers
+    .replace(/:$/, "") // remove trailing colon
+    .trim()
+    .replace(/\s+/g, "-") // spaces → hyphens
+    .replace(/[^\w-]/g, ""); // remove special chars
+}
+
 // ─── Markdown components — pure Tailwind ──────────────────────────────────────
 const mdComponents: Components = {
   h1: ({ children }) => (
@@ -110,11 +121,19 @@ const mdComponents: Components = {
       {children}
     </h1>
   ),
-  h2: ({ children }) => (
-    <h2 className="mt-8 mb-3 border-b-2 border-amber-200 pb-2 text-xl font-bold text-gray-900 sm:text-2xl">
-      {children}
-    </h2>
-  ),
+  h2: ({ children }) => {
+    const id = slugify(
+      Array.isArray(children) ? children.join("") : String(children ?? ""),
+    );
+    return (
+      <h2
+        id={id}
+        className="mt-8 mb-3 scroll-mt-24 border-b-2 border-amber-200 pb-2 text-xl font-bold text-gray-900 sm:text-2xl"
+      >
+        {children}
+      </h2>
+    );
+  },
   h3: ({ children }) => (
     <h3 className="mt-6 mb-2 text-lg font-semibold text-amber-800">
       {children}
@@ -164,17 +183,15 @@ export default async function BlogDetailPage({
   const { blogId } = await params;
 
   const post = await getBlogDetails(blogId);
-  // console.log('post', post)
   const description = unescapeMarkdown(post.description);
   const mins = readingTime(post.description);
-  console.log("mins", typeof mins);
   const tocItems = extractTocItems(description); // ✅ dynamic
   const keyBenefits = extractKeyBenefits(description);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-amber-50/30 to-emerald-50/30 pt-20">
+    <div className="min-h-screen bg-linear-to-b from-white via-amber-50/30 to-emerald-50/30 pt-20">
       {/* ── Hero Banner ─────────────────────────────────────────────────────── */}
-      <section className="relative h-[62vh] w-full overflow-hidden bg-gradient-to-br from-amber-600 via-orange-500 to-red-600 sm:h-[68vh]">
+      <section className="relative h-[62vh] w-full overflow-hidden bg-linear-to-br from-amber-600 via-orange-500 to-red-600 sm:h-[68vh]">
         {/* Hero image */}
         <Image
           src={post.image}
@@ -186,7 +203,7 @@ export default async function BlogDetailPage({
         />
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/20 to-black/60" />
 
         {/* Floating background circles — same as AboutPage */}
         <FloatingBackground />
@@ -343,9 +360,9 @@ export default async function BlogDetailPage({
 function AuthorCard({ author, date, mins }: AuthorCardProps) {
   return (
     <FadeInFromLeft>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-gray-100 bg-gradient-to-br from-amber-50 to-orange-50 p-5 shadow-md">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-gray-100 bg-linear-to-br from-amber-50 to-orange-50 p-5 shadow-md">
         <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-orange-500 text-lg font-bold text-white shadow-md">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-amber-500 to-orange-500 text-lg font-bold text-white shadow-md">
             {author.charAt(0)}
           </div>
           <div>
@@ -377,7 +394,7 @@ function TagsRow({ tags }: { tags: string[] }) {
         {tags.map((tag: string) => (
           <span
             key={tag}
-            className="cursor-pointer rounded-full bg-gradient-to-r from-amber-100 to-orange-100 px-4 py-1 text-sm font-semibold text-amber-700 capitalize transition-all hover:from-amber-200 hover:to-orange-200"
+            className="cursor-pointer rounded-full bg-linear-to-r from-amber-100 to-orange-100 px-4 py-1 text-sm font-semibold text-amber-700 capitalize transition-all hover:from-amber-200 hover:to-orange-200"
           >
             {tag}
           </span>
@@ -404,14 +421,14 @@ function Sidebar({
         <FadeInFromRight>
           <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-lg">
             <h3 className="mb-4 flex items-center gap-2 text-base font-bold text-gray-900">
-              <span className="h-1 w-5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500" />
+              <span className="h-1 w-5 rounded-full bg-linear-to-r from-amber-500 to-orange-500" />
               In This Article
             </h3>
             <ul className="space-y-1">
               {tocItems.map((item: string) => (
                 <li key={item}>
                   <a
-                    href="#"
+                    href={`#${slugify(item)}`}
                     className="group flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-gray-600 transition-all duration-200 hover:bg-amber-50 hover:text-amber-700"
                   >
                     <ChevronRight className="h-3.5 w-3.5 text-amber-400 transition-transform group-hover:translate-x-0.5" />
@@ -427,9 +444,9 @@ function Sidebar({
       {/* Quick benefits card */}
       {keyBenefits.length > 0 && (
         <FadeInFromRight>
-          <div className="rounded-2xl border border-gray-100 bg-gradient-to-br from-amber-50 to-orange-50 p-6 shadow-lg">
+          <div className="rounded-2xl border border-gray-100 bg-linear-to-br from-amber-50 to-orange-50 p-6 shadow-lg">
             <h3 className="mb-4 flex items-center gap-2 text-base font-bold text-gray-900">
-              <span className="h-1 w-5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500" />
+              <span className="h-1 w-5 rounded-full bg-linear-to-r from-amber-500 to-orange-500" />
               Key Benefits
             </h3>
             <ul className="space-y-2.5">
@@ -449,9 +466,9 @@ function Sidebar({
 
       {/* Tags cloud */}
       <FadeInFromRight>
-        <div className="rounded-2xl border border-gray-100 bg-gradient-to-br from-green-50 to-emerald-50 p-6 shadow-lg">
+        <div className="rounded-2xl border border-gray-100 bg-linear-to-br from-green-50 to-emerald-50 p-6 shadow-lg">
           <h3 className="mb-4 flex items-center gap-2 text-base font-bold text-gray-900">
-            <span className="h-1 w-5 rounded-full bg-gradient-to-r from-emerald-500 to-green-500" />
+            <span className="h-1 w-5 rounded-full bg-linear-to-r from-emerald-500 to-green-500" />
             Related Tags
           </h3>
           <div className="flex flex-wrap gap-2">
@@ -473,7 +490,7 @@ function Sidebar({
       <FadeInFromRight>
         <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-lg">
           <h3 className="mb-4 flex items-center gap-2 text-base font-bold text-gray-900">
-            <span className="h-1 w-5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500" />
+            <span className="h-1 w-5 rounded-full bg-linear-to-r from-amber-500 to-orange-500" />
             Why Organic Nation?
           </h3>
           <ul className="space-y-2.5">
@@ -494,8 +511,8 @@ function Sidebar({
             ))}
           </ul>
           <Link
-            href="/shop"
-            className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:from-amber-600 hover:to-orange-600 hover:shadow-lg"
+            href="/shop/all"
+            className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-amber-500 to-orange-500 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:from-amber-600 hover:to-orange-600 hover:shadow-lg"
           >
             Shop Now <ChevronRight className="h-4 w-4" />
           </Link>

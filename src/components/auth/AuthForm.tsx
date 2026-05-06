@@ -150,7 +150,7 @@ const SubmitButton = ({
   <button
     type="submit"
     disabled={isLoading}
-    className="group flex w-full cursor-pointer items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-amber-600 to-red-700 px-6 py-3 font-semibold text-white shadow-lg transition-all hover:shadow-xl disabled:opacity-50"
+    className="group flex w-full cursor-pointer items-center justify-center gap-3 rounded-xl bg-linear-to-r from-amber-600 to-red-700 px-6 py-3 font-semibold text-white shadow-lg transition-all hover:shadow-xl disabled:opacity-50"
   >
     <span>{isLoading ? "Sending OTP..." : "Send OTP"}</span>
     {!isLoading && showArrow && (
@@ -193,12 +193,12 @@ const AuthForm = ({ isCheckout }) => {
       const result = await verifyOtp({ phoneNumber, otp }).unwrap();
       if (result?.success) {
         const mergeResult = await mergeCart();
-        console.log("merge result", mergeResult);
         if (mergeResult.data.success) {
           getCurrentUser();
         }
-        // action();
-        router.push("/");
+        if (!isCheckout) {
+          router.push("/");
+        }
       }
       return true;
 

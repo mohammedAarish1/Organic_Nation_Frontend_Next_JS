@@ -10,16 +10,16 @@ export default function PaymentMethods() {
         <div className="xs:p-4 w-full rounded-xl bg-white py-2 shadow-sm">
           <div className="flex flex-wrap items-center justify-center gap-4">
             {[
-              { icon: CreditCard, label: "Cards" },
-              { icon: Smartphone, label: "UPI" },
-              { icon: Wallet, label: "Wallets" },
-              { icon: Package, label: "COD" },
+              { icon: CreditCard, label: "Cards", color: "red" },
+              { icon: Smartphone, label: "UPI", color: "green" },
+              { icon: Wallet, label: "Wallets", color: "blue" },
+              { icon: Package, label: "COD", color: "orange" },
             ].map((payment, idx) => (
               <div
                 key={idx}
                 className="flex items-center gap-2 rounded-lg bg-gray-50 px-4 py-2"
               >
-                <payment.icon size={20} color="#6B7280" />
+                <payment.icon size={20} color={payment.color} />
                 <span className="text-sm font-medium text-gray-700">
                   {payment.label}
                 </span>

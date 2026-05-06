@@ -1,20 +1,16 @@
 import BlogSection from "@/components/common/BlogSection";
-import RecipeSection from "@/components/common/RecipeSection";
-import TestimonialSection from "@/components/common/TestimonialSection";
+// import RecipeSection from "@/components/common/RecipeSection";
 import CategoriesSection from "@/components/homepage/CategoriesSection";
 import CategoryCarousel from "@/components/homepage/CategoryCarousel";
 import CTASection from "@/components/homepage/CTASection";
 import FeaturedProducts from "@/components/homepage/FeaturedProducts";
 import FeaturesSection from "@/components/homepage/FeaturesSection";
 import HeroSection from "@/components/homepage/HeroSection";
-import Testimonials from "@/components/homepage/Testimonials";
 import WhyUs from "@/components/homepage/WhyUs";
 import { BlogsSkeleton } from "@/components/skeletons/BlogsSkeleton";
-// import { getProductsAndCategories } from "@/lib/services/api";
-// import { productsApi } from "@/lib/services/api/productsApi";
-// import { makeStore } from "@/lib/store";
 import { Suspense } from "react";
 import type { Metadata } from "next";
+// import SocialDMReviews from "@/components/testimonials/SocialDMReviews";
 
 export const metadata: Metadata = {
   title:
@@ -86,13 +82,11 @@ export default async function HomePage() {
       <CategoriesSection />
       <WhyUs />
       <FeaturedProducts />
-      {/* <TestimonialSection /> */}
-      {/* <BlogSection homePage={true}/> */}
+      {/* <SocialDMReviews/> */}
       <Suspense fallback={<BlogsSkeleton />}>
         <BlogSection homePage />
       </Suspense>
       {/* <RecipeSection recipes={[]} showBtn={true} /> */}
-      {/* <Testimonials /> */}
       <CTASection />
     </main>
   );

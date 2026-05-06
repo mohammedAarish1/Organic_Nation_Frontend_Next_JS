@@ -185,7 +185,6 @@ export default function ReviewModal({ isOpen, onClose, productId }) {
       e.target.value = "";
       return;
     }
-    console.log("giles", files);
     for (const file of files) {
       if ((file as File).size > 5 * 1024 * 1024) {
         toast.error("Each image must be under 5MB");
@@ -392,7 +391,7 @@ export default function ReviewModal({ isOpen, onClose, productId }) {
                     placeholder="Summarize your experience"
                     disabled={isSubmitting}
                     maxLength={100}
-                    className="w-full rounded-xl border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-orange-500"
+                    className="w-full rounded-xl border border-gray-300 px-4 py-3 text-black transition-all focus:border-transparent focus:ring-2 focus:ring-orange-500"
                   />
                   <div className="mt-1 flex justify-between">
                     <ErrorMessage
@@ -418,7 +417,7 @@ export default function ReviewModal({ isOpen, onClose, productId }) {
                     placeholder="Share your thoughts about this product..."
                     disabled={isSubmitting}
                     maxLength={1000}
-                    className="w-full resize-none rounded-xl border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-orange-500"
+                    className="w-full resize-none rounded-xl border border-gray-300 px-4 py-3 text-black transition-all focus:border-transparent focus:ring-2 focus:ring-orange-500"
                   />
                   <div className="mt-1 flex justify-between">
                     <ErrorMessage
