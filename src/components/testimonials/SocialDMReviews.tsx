@@ -255,7 +255,7 @@ const SocialDMReviews = () => {
             <div className="mb-12 text-center">
               {/* Instagram pill badge */}
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-linear-to-r from-purple-100 to-pink-100 px-6 py-2">
-                <Instagram className="h-4 w-4 text-purple-600" />
+                <Instagram />
                 <span className="text-sm font-semibold text-purple-700">
                   Direct Messages
                 </span>
@@ -298,7 +298,7 @@ const SocialDMReviews = () => {
           {/* ── Bottom Note ── */}
           <FadeInView>
             <div className="mt-10 flex items-center justify-center gap-2 rounded-2xl border border-amber-100 bg-amber-50 px-6 py-4">
-              <Instagram className="h-5 w-5 shrink-0 text-purple-500" />
+              <Instagram />
               <p className="text-center text-sm text-gray-600">
                 These are{" "}
                 <span className="font-semibold text-amber-700">
