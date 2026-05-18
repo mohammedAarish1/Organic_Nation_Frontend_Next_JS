@@ -61,7 +61,7 @@ export const OrderDetailsModal = memo(function OrderDetailsModal({
                 className="rounded-full p-2 transition-colors hover:bg-white/50"
                 aria-label="Close order details"
               >
-                <X className="h-6 w-6" />
+                <X className="h-6 w-6" color="black" />
               </button>
             </div>
 

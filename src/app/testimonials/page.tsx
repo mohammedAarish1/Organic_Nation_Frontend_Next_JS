@@ -294,7 +294,7 @@ const CTASection = () => {
   return (
     <section className="px-4 py-16 sm:px-6 lg:px-8">
       <FadeInView>
-        <div className="mx-auto max-w-4xl overflow-hidden rounded-3xl bg-gradient-to-br from-amber-600 via-orange-500 to-red-600 p-8 text-center text-white shadow-2xl sm:p-12">
+        <div className="mx-auto max-w-4xl overflow-hidden rounded-3xl bg-linear-to-br from-amber-600 via-orange-500 to-red-600 p-8 text-center text-white shadow-2xl sm:p-12">
           <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
             Join Our Happy Family
           </h2>

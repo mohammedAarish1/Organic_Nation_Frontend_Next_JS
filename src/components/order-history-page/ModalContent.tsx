@@ -103,7 +103,7 @@ export function ModalContent({ order, productMap, handleOrderCancel }: Props) {
         </h3>
         <div className="space-y-3 text-sm">
           <div className="flex justify-between">
-            <span className="text-gray-600">
+            <span className="text-gray-900">
               Subtotal ({order.orderDetails.length} items)
             </span>
             <span className="font-medium">₹{mrpTotal}</span>
@@ -116,7 +116,7 @@ export function ModalContent({ order, productMap, handleOrderCancel }: Props) {
           )}
           {order.shippingFee > 0 ? (
             <div className="flex justify-between">
-              <span className="text-gray-600">Shipping Fee</span>
+              <span className="text-gray-900">Shipping Fee</span>
               <span className="font-medium">₹{order.shippingFee}</span>
             </div>
           ) : (
@@ -127,7 +127,7 @@ export function ModalContent({ order, productMap, handleOrderCancel }: Props) {
           )}
           {order.CODCharge > 0 && (
             <div className="flex justify-between">
-              <span className="text-gray-600">COD Charges</span>
+              <span className="text-gray-900">COD Charges</span>
               <span className="font-medium">₹{order.CODCharge}</span>
             </div>
           )}
@@ -145,7 +145,7 @@ export function ModalContent({ order, productMap, handleOrderCancel }: Props) {
         <h3 className="mb-3 text-lg font-bold text-gray-900">
           Shipping Address
         </h3>
-        <div className="space-y-2 text-sm text-gray-600">
+        <div className="space-y-2 text-sm text-gray-900">
           <div className="flex items-start gap-2">
             <MapPin
               className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"
@@ -175,7 +175,7 @@ export function ModalContent({ order, productMap, handleOrderCancel }: Props) {
 
       {/* Payment Method */}
       <div className="rounded-xl border border-emerald-100 p-4">
-        <div className="mb-2 text-sm text-gray-600">Payment Method</div>
+        <div className="mb-2 text-sm text-gray-800">Payment Method</div>
         <div className="font-semibold text-gray-900 capitalize">
           {order.paymentMethod.replace("_", " ")}
         </div>
@@ -189,7 +189,7 @@ export function ModalContent({ order, productMap, handleOrderCancel }: Props) {
             className="cursor-pointer text-sm text-gray-600 underline underline-offset-2"
             onClick={() => handleOrderCancel(order._id)}
           >
-            Cancel
+            Cancel Order
           </button>
         </div>
       )}

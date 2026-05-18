@@ -357,7 +357,7 @@ export default function ReviewModal({ isOpen, onClose, productId }) {
                   className="rounded-full p-2 transition-colors hover:bg-gray-100 disabled:opacity-50"
                   aria-label="Close modal"
                 >
-                  <X size={24} />
+                  <X size={24} color="black" />
                 </button>
               </div>
 

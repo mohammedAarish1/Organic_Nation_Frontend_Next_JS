@@ -9,6 +9,7 @@ import {
   ChevronUp,
   RotateCcw,
   FileText,
+  SquareArrowOutUpRight,
 } from "lucide-react";
 import { PaymentBadge, StatusBadge } from "./Badges";
 import { formatDate } from "@/features/order/utils/orderHistoryUtils";
@@ -23,6 +24,7 @@ import Image from "next/image";
 import { useCancelOrderMutation } from "@/lib/services/api/ordersApi";
 import { toast } from "react-toastify";
 import { Product } from "@/types";
+import Link from "next/link";
 
 interface Props {
   order: Order;
@@ -148,6 +150,12 @@ export const OrderCard = memo(function OrderCard({ order, productMap }: Props) {
                               />
                               Returned ({item.returnInfo.returnedQuantity} Qty)
                             </span>
+                            <Link
+                              href="/returns"
+                              className="ml-2 inline-flex items-center gap-1 text-xs underline"
+                            >
+                              Manage Returns <SquareArrowOutUpRight size={10} />
+                            </Link>
                           </div>
                         )}
                       </div>

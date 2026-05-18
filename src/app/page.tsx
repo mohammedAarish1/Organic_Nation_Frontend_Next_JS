@@ -78,10 +78,10 @@ export default async function HomePage() {
     <main className="min-h-screen">
       <HeroSection />
       <CategoryCarousel />
+      <FeaturedProducts />
       <FeaturesSection />
       <CategoriesSection />
       <WhyUs />
-      <FeaturedProducts />
       {/* <SocialDMReviews/> */}
       <Suspense fallback={<BlogsSkeleton />}>
         <BlogSection homePage />

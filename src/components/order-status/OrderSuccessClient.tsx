@@ -319,7 +319,7 @@ function SuccessModal({
             transition={{ delay: 1.0 }}
           >
             <span className="text-sm text-gray-600">Payment Method</span>
-            <span className="rounded-full bg-blue-50 px-3 py-1 text-sm font-medium capitalize">
+            <span className="rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-orange-500 capitalize">
               {orderData.paymentMethod.replaceAll("_", " ")}
             </span>
           </motion.div>
@@ -352,7 +352,7 @@ function SuccessModal({
         transition={{ delay: 1.3 }}
       >
         <button
-          onClick={() => router.push("/shop")}
+          onClick={() => router.push("/shop/all")}
           className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-amber-600 px-6 py-3 font-semibold text-amber-700 transition-all hover:bg-amber-50"
         >
           Continue Shopping

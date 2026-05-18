@@ -82,6 +82,7 @@ export const ordersApi = createApi({
         url: "/orders/add-return-item",
         method: "POST",
         body: formData,
+        formData: true,
       }),
       transformResponse: (response) => {
         return response;

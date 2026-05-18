@@ -210,7 +210,7 @@ const AuthForm = ({ isCheckout }) => {
       // setStep('phone');
     } catch (error: any) {
       if (error) {
-        setError(error.data.message);
+        setError(error.data?.message);
       }
       return false;
     }
