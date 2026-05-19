@@ -310,38 +310,37 @@ export default function ReturnItemForm({
       formData.append("ifscCode", values.ifscCode);
     }
 
-    // try {
+    try {
+      const result = await addReturnItem(formData).unwrap();
 
-    //   const result = await addReturnItem(formData).unwrap();
-
-    //   if (result.success) {
-    //     resetForm();
-    //     onCancel();
-    //     toast.success(result.message);
-    //   }
-    // } catch (error) {
-    //   if (!error.data.success) {
-    //     toast.error(error.data.message);
-    //   }
-    // }
+      if (result.success) {
+        resetForm();
+        onCancel();
+        toast.success(result.message);
+      }
+    } catch (error) {
+      if (!error.data.success) {
+        toast.error(error.data.message);
+      }
+    }
 
     // await onSubmit(formData);
 
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/orders/add-return-item`,
-        {
-          method: "POST",
-          body: formData,
-          credentials: "include",
-          // NO headers at all
-        },
-      );
-      const data = await res.json();
-      console.log("Direct fetch result:", data);
-    } catch (err) {
-      console.error("Direct fetch error:", err);
-    }
+    // try {
+    //   const res = await fetch(
+    //     `${process.env.NEXT_PUBLIC_API_URL}/api/orders/add-return-item`,
+    //     {
+    //       method: "POST",
+    //       body: formData,
+    //       credentials: "include",
+    //       // NO headers at all
+    //     },
+    //   );
+    //   const data = await res.json();
+    //   console.log("Direct fetch result:", data);
+    // } catch (err) {
+    //   console.error("Direct fetch error:", err);
+    // }
   };
 
   return (
