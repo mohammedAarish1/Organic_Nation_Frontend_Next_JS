@@ -188,7 +188,7 @@ export default function CategoriesSection() {
             disabled={false}
             className="group absolute top-1/2 left-0 z-20 -translate-x-4 -translate-y-1/2 rounded-full border border-gray-200 bg-white p-2 shadow-lg transition-all duration-300 hover:bg-amber-50 hover:shadow-xl sm:-translate-x-6 sm:p-3"
           >
-            <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+            <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" color="black" />
           </ArrowButton>
 
           {/* Right Arrow */}
@@ -199,7 +199,7 @@ export default function CategoriesSection() {
             className="group absolute top-1/2 right-0 z-20 translate-x-4 -translate-y-1/2 rounded-full border border-gray-200 bg-white p-2 shadow-lg transition-all duration-300 hover:bg-amber-50 hover:shadow-xl sm:translate-x-6 sm:p-3"
             aria-label="Scroll right"
           >
-            <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
+            <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" color="black" />
           </ArrowButton>
 
           {/* Scrollable Container */}

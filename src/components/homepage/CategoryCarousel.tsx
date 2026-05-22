@@ -45,7 +45,7 @@ const CategoryCard = memo(function CategoryCard({ item }: CategoryCardProps) {
               alt={`${item.category} category`}
               fill
               sizes="(max-width: 640px) 48px, (max-width: 768px) 56px, 64px"
-              className="object-contain"
+              className="w-auto object-contain"
               loading="lazy"
             />
           </div>

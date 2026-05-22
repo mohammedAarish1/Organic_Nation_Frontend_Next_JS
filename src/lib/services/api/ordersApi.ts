@@ -2,7 +2,6 @@
 import { baseQueryWithRefresh } from "@/lib/baseQueryWithRefresh";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 export const ordersApi = createApi({
   reducerPath: "ordersApi",
   baseQuery: baseQueryWithRefresh,
@@ -79,7 +78,7 @@ export const ordersApi = createApi({
     }),
     addReturnItem: builder.mutation({
       query: (formData) => ({
-        url: "/orders/add-return-item",
+        url: "/orders/add-return-item-new",
         method: "POST",
         body: formData,
       }),

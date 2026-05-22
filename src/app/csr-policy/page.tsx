@@ -48,7 +48,7 @@ const PolicySection = ({
         {items.map((item, idx) => (
           <div
             key={idx}
-            className="flex gap-3 rounded-xl bg-gradient-to-r from-emerald-50/30 to-amber-50/30 p-4 transition-all hover:shadow-md"
+            className="flex gap-3 rounded-xl bg-linear-to-r from-emerald-50/30 to-amber-50/30 p-4 transition-all hover:shadow-md"
           >
             <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
             <div>
@@ -76,7 +76,7 @@ const StatsCard = ({
 }) => {
   return (
     <div className="group rounded-2xl bg-white p-6 shadow-md transition-all hover:shadow-xl">
-      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-emerald-100 to-green-100 transition-transform group-hover:scale-110">
+      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-r from-emerald-100 to-green-100 transition-transform group-hover:scale-110">
         {icon}
       </div>
       <h4 className="mb-2 text-xl font-bold text-gray-900">{label}</h4>
@@ -211,7 +211,7 @@ export default function CSRPolicyPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-emerald-50/30 to-white">
+    <div className="mt-10 min-h-screen bg-linear-to-b from-emerald-50/30 to-white">
       {/* Decorative Background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-20">
         <div className="absolute top-20 left-1/4 h-96 w-96 rounded-full bg-amber-200 blur-3xl" />
@@ -362,17 +362,17 @@ export default function CSRPolicyPage() {
             </div>
 
             {/* Email */}
-            <div className="flex gap-4 rounded-2xl bg-gradient-to-r from-emerald-50/50 to-amber-50/50 p-6">
+            <div className="flex gap-4 rounded-2xl bg-linear-to-r from-emerald-50/50 to-amber-50/50 p-6">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-emerald-100 to-green-100">
                 <Mail className="h-6 w-6 text-emerald-600" />
               </div>
               <div>
                 <h3 className="mb-2 font-semibold text-gray-900">Email</h3>
                 <a
-                  href="mailto:Info@foodsbay.com"
+                  href="mailto:info@organicnation.co.in"
                   className="text-sm text-emerald-600 transition-colors hover:text-emerald-700"
                 >
-                  Info@foodsbay.com
+                  info@organicnation.co.in
                 </a>
               </div>
             </div>
@@ -395,11 +395,11 @@ export default function CSRPolicyPage() {
           </div>
 
           {/* CTA Button */}
-          <div className="mt-8 text-center">
+          {/* <div className="mt-8 text-center">
             <button className="rounded-full bg-gradient-to-r from-emerald-600 to-green-600 px-8 py-4 font-semibold text-white shadow-lg transition-all hover:shadow-xl">
-              Contact Our CSR Team
+              Contact Us
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

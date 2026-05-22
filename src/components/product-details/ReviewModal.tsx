@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useAddReviewMutation } from "@/lib/services/api/reviewsApi";
 import Image from "next/image";
+import { uploadFileToS3 } from "@/lib/utils";
 // import Image from "next/image";
 
 interface RatingInputProps {
@@ -259,17 +260,40 @@ export default function ReviewModal({ isOpen, onClose, productId }) {
   // Handle form submission
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const formData = new FormData();
-      formData.append("productName", productId);
-      formData.append("rating", values.rating);
-      formData.append("title", values.title.trim());
-      formData.append("review", values.review.trim());
+      // const formData = new FormData();
+      const payload = { ...values, productName: productId };
+      let imagePaths = null;
+      let videoPath = null;
+      // formData.append("productName", productId);
+      // formData.append("rating", values.rating);
+      // formData.append("title", values.title.trim());
+      // formData.append("review", values.review.trim());
 
-      values.images.forEach((img) => formData.append("images", img.file));
-      if (values.video) formData.append("video", values.video.file);
+      if (values.images.length > 0) {
+        const folder = `${productId}`;
+        imagePaths = await Promise.all(
+          values.images.map((img) =>
+            uploadFileToS3(img.file, folder, "customerReview"),
+          ),
+        );
+        payload.images = imagePaths;
+      }
+      // values.images.forEach((img) => formData.append("images", img.file));
+      // if (values.video) formData.append("video", values.video.file);
+
+      if (values.video) {
+        const folder = `${productId}`;
+        videoPath = await uploadFileToS3(
+          values.video.file,
+          folder,
+          "customerReview",
+        );
+        // formData.append("video", videoPath);
+        payload.video = videoPath;
+      }
 
       // Uncomment when ready to use
-      const result = await addReview(formData).unwrap();
+      const result = await addReview(payload).unwrap();
       if (result.success) {
         toast.success(result.message);
         cleanupBlobUrls(values);
@@ -383,7 +407,8 @@ export default function ReviewModal({ isOpen, onClose, productId }) {
                 {/* TITLE */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-gray-700">
-                    Title <span className="text-red-500">*</span>
+                    Title
+                    {/* <span className="text-red-500">*</span> */}
                   </label>
                   <Field
                     name="title"
@@ -408,7 +433,8 @@ export default function ReviewModal({ isOpen, onClose, productId }) {
                 {/* REVIEW */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-gray-700">
-                    Review <span className="text-red-500">*</span>
+                    Review
+                    {/* <span className="text-red-500">*</span> */}
                   </label>
                   <Field
                     name="review"

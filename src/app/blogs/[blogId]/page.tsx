@@ -336,6 +336,7 @@ export default async function BlogDetailPage({
                 tags={post.tags}
                 tocItems={tocItems}
                 keyBenefits={keyBenefits}
+                path={post.path}
               />
             </aside>
           </div>
@@ -409,10 +410,12 @@ function Sidebar({
   tags,
   tocItems,
   keyBenefits,
+  path,
 }: {
   tags: string[];
   tocItems: string[];
   keyBenefits: string[];
+  path: string;
 }) {
   return (
     <>
@@ -510,12 +513,14 @@ function Sidebar({
               </li>
             ))}
           </ul>
-          <Link
-            href="/shop/all"
-            className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-amber-500 to-orange-500 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:from-amber-600 hover:to-orange-600 hover:shadow-lg"
-          >
-            Shop Now <ChevronRight className="h-4 w-4" />
-          </Link>
+          {path && (
+            <Link
+              href={`/shop/${path}`}
+              className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-amber-500 to-orange-500 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:from-amber-600 hover:to-orange-600 hover:shadow-lg"
+            >
+              Shop Now <ChevronRight className="h-4 w-4" />
+            </Link>
+          )}
         </div>
       </FadeInFromRight>
     </>

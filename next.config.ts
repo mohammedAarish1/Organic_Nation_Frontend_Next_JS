@@ -49,6 +49,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "organic-nation-product-images.s3.ap-south-1.amazonaws.com",
       },
+      {
+        protocol: "https",
+        hostname: "product-reviews-imgs-videos.s3.ap-south-1.amazonaws.com",
+      },
     ],
   },
 };

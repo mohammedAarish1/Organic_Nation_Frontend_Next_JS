@@ -1,3 +1,6 @@
+import { API_BASE_URL } from "@/constants";
+import axios from "axios";
+
 export function getCatogoriesWithImages(categoryList, type) {
   const icons = [
     {
@@ -126,4 +129,26 @@ export const timeAgo = (createdAt) => {
   if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
   if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
   return `${diffInSeconds} second${diffInSeconds > 1 ? "s" : ""} ago`;
+};
+
+export const uploadFileToS3 = async (file, folder, type) => {
+  // Step 1: Get presigned URL from your backend
+  const { data } = await axios.post(
+    `${API_BASE_URL}/api/orders/get-upload-url`,
+    {
+      fileName: file.name,
+      fileType: file.type,
+      folder,
+      type,
+    },
+  );
+
+  // Step 2: Upload directly to S3 (bypasses CloudFront completely)
+  await fetch(data.uploadUrl, {
+    method: "PUT",
+    body: file,
+    headers: { "Content-Type": file.type },
+  });
+
+  return data.fileUrl;
 };

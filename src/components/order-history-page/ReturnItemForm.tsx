@@ -13,14 +13,9 @@ import * as Yup from "yup";
 import { useAddReturnItemMutation } from "@/lib/services/api/ordersApi";
 import { toast } from "react-toastify";
 import { Product } from "@/types";
-
-// Types
-// interface Product {
-//   "name-url": string;
-//   weight: string;
-//   quantity: number;
-//   unitPrice: number;
-// }
+import axios from "axios";
+import { API_BASE_URL } from "@/constants";
+import { uploadFileToS3 } from "@/lib/utils";
 
 interface ReturnItemFormProps {
   product: Product;
@@ -257,6 +252,15 @@ export default function ReturnItemForm({
     currentImages: File[],
   ) => {
     const files = Array.from(e.target.files || []);
+
+    // Check image size
+    const oversizedImages = files.filter((file) => file.size > 1 * 1024 * 1024);
+
+    if (oversizedImages.length > 0) {
+      toast.error("Each image size must be less than 1MB");
+      e.target.value = "";
+      return;
+    }
     const newImages = [...currentImages, ...files].slice(0, 3);
     setFieldValue("images", newImages);
     e.target.value = "";
@@ -269,10 +273,10 @@ export default function ReturnItemForm({
     setFieldError: (field: string, message: string) => void,
   ) => {
     const file = e.target.files?.[0];
-
     if (file) {
-      if (file.size > 15 * 1024 * 1024) {
-        setFieldError("video", "Video size must be less than 15MB");
+      if (file.size > 20 * 1024 * 1024) {
+        toast.error("Video size must be less than 20MB");
+        setFieldError("video", "Video size must be less than 20MB");
         e.target.value = "";
         return;
       }
@@ -281,12 +285,76 @@ export default function ReturnItemForm({
     e.target.value = "";
   };
 
-  // Handle form submission
+  // Handle form submission old correct
+  // const handleSubmit = async (
+  //   values: FormValues,
+  //   { resetForm }: { resetForm: () => void },
+  // ) => {
+  //   const formData = new FormData();
+
+  //   formData.append("itemName", values.itemName);
+  //   formData.append("weight", values.weight);
+  //   formData.append("quantity", values.quantity.toString());
+  //   formData.append("reason", values.reason);
+  //   formData.append("returnOptions", values.returnOptions);
+  //   formData.append("invoiceNumber", invoiceNumber);
+
+  //   values.images.forEach((image) => {
+  //     formData.append("images", image);
+  //   });
+
+  //   if (values.video) {
+  //     formData.append("video", values.video);
+  //   }
+
+  //   if (values.returnOptions === "refund") {
+  //     formData.append("accountName", values.accountName);
+  //     formData.append("bankName", values.bankName);
+  //     formData.append("accountNumber", values.accountNumber);
+  //     formData.append("ifscCode", values.ifscCode);
+  //   }
+
+  //   try {
+  //     const result = await addReturnItem(formData).unwrap();
+
+  //     if (result.success) {
+  //       resetForm();
+  //       onCancel();
+  //       toast.success(result.message);
+  //     }
+  //   } catch (error) {
+  //     if (!error.data.success) {
+  //       toast.error(error.data.message);
+  //     }
+  //   }
+
+  //   // await onSubmit(formData);
+
+  //   // try {
+  //   //   const res = await fetch(
+  //   //     `${process.env.NEXT_PUBLIC_API_URL}/api/orders/add-return-item`,
+  //   //     {
+  //   //       method: "POST",
+  //   //       body: formData,
+  //   //       credentials: "include",
+  //   //       // NO headers at all
+  //   //     },
+  //   //   );
+  //   //   const data = await res.json();
+  //   //   console.log("Direct fetch result:", data);
+  //   // } catch (err) {
+  //   //   console.error("Direct fetch error:", err);
+  //   // }
+  // };
+
   const handleSubmit = async (
     values: FormValues,
     { resetForm }: { resetForm: () => void },
   ) => {
     const formData = new FormData();
+    const payload = { ...values, invoiceNumber };
+    let imagePaths = null;
+    let videoPath = null;
 
     formData.append("itemName", values.itemName);
     formData.append("weight", values.weight);
@@ -295,12 +363,24 @@ export default function ReturnItemForm({
     formData.append("returnOptions", values.returnOptions);
     formData.append("invoiceNumber", invoiceNumber);
 
-    values.images.forEach((image) => {
-      formData.append("images", image);
-    });
+    if (values.images.length > 0) {
+      // Upload all files directly to S3 first
+      imagePaths = await Promise.all(
+        values.images.map((img) =>
+          uploadFileToS3(img, "returns/images", "customerReturn"),
+        ),
+      );
+      payload.images = imagePaths;
+    }
 
     if (values.video) {
-      formData.append("video", values.video);
+      videoPath = await uploadFileToS3(
+        values.video,
+        "returns/video",
+        "customerReturn",
+      );
+      // formData.append("video", videoPath);
+      payload.video = videoPath;
     }
 
     if (values.returnOptions === "refund") {
@@ -311,7 +391,7 @@ export default function ReturnItemForm({
     }
 
     try {
-      const result = await addReturnItem(formData).unwrap();
+      const result = await addReturnItem(payload).unwrap();
 
       if (result.success) {
         resetForm();
@@ -323,24 +403,6 @@ export default function ReturnItemForm({
         toast.error(error.data.message);
       }
     }
-
-    // await onSubmit(formData);
-
-    // try {
-    //   const res = await fetch(
-    //     `${process.env.NEXT_PUBLIC_API_URL}/api/orders/add-return-item`,
-    //     {
-    //       method: "POST",
-    //       body: formData,
-    //       credentials: "include",
-    //       // NO headers at all
-    //     },
-    //   );
-    //   const data = await res.json();
-    //   console.log("Direct fetch result:", data);
-    // } catch (err) {
-    //   console.error("Direct fetch error:", err);
-    // }
   };
 
   return (
@@ -364,6 +426,7 @@ export default function ReturnItemForm({
             setFieldValue,
             setFieldError,
             handleSubmit: formikSubmit,
+            isSubmitting,
           }) => (
             <div className="space-y-6 p-6">
               {/* Header */}
@@ -374,9 +437,9 @@ export default function ReturnItemForm({
                 <button
                   type="button"
                   onClick={onCancel}
-                  className="rounded-full p-2 transition-colors hover:bg-gray-100"
+                  className="textb rounded-full p-2 transition-colors hover:bg-gray-100"
                 >
-                  <X className="h-6 w-6" />
+                  <X className="h-6 w-6" color="black" />
                 </button>
               </div>
 
@@ -406,7 +469,7 @@ export default function ReturnItemForm({
                   name="quantity"
                   min="1"
                   max={maxQuantity}
-                  className="block w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 transition-colors outline-none focus:border-amber-500"
+                  className="block w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 text-black transition-colors outline-none focus:border-amber-500"
                 />
                 <ErrorMessage
                   name="quantity"
@@ -426,7 +489,7 @@ export default function ReturnItemForm({
                   name="reason"
                   rows={4}
                   placeholder="Please describe the issue with the product..."
-                  className="block w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 transition-colors outline-none focus:border-amber-500"
+                  className="block w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 text-black transition-colors outline-none focus:border-amber-500"
                 />
                 <ErrorMessage
                   name="reason"
@@ -643,7 +706,7 @@ export default function ReturnItemForm({
                   type="button"
                   onClick={() => formikSubmit()}
                   disabled={isSubmitting}
-                  className="flex-1 rounded-xl bg-gradient-to-r from-amber-600 to-red-700 py-3 font-semibold text-white shadow-lg transition-all hover:shadow-xl disabled:opacity-50"
+                  className="flex-1 cursor-pointer rounded-xl bg-linear-to-r from-amber-600 to-red-700 py-3 font-semibold text-white shadow-lg transition-all hover:shadow-xl disabled:opacity-50"
                 >
                   {isSubmitting ? "Submitting..." : "Submit Request"}
                 </button>

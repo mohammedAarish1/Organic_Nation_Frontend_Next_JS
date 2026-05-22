@@ -103,7 +103,7 @@ export function ModalContent({ order, productMap, handleOrderCancel }: Props) {
         </h3>
         <div className="space-y-3 text-sm">
           <div className="flex justify-between">
-            <span className="text-gray-900">
+            <span className="text-black">
               Subtotal ({order.orderDetails.length} items)
             </span>
             <span className="font-medium">₹{mrpTotal}</span>
@@ -127,13 +127,13 @@ export function ModalContent({ order, productMap, handleOrderCancel }: Props) {
           )}
           {order.CODCharge > 0 && (
             <div className="flex justify-between">
-              <span className="text-gray-900">COD Charges</span>
+              <span className="text-black">COD Charges</span>
               <span className="font-medium">₹{order.CODCharge}</span>
             </div>
           )}
           <div className="border-t border-emerald-200 pt-2">
             <div className="flex justify-between text-base font-bold">
-              <span>Total Amount</span>
+              <span className="text-black">Total Amount</span>
               <span className="text-emerald-700">₹{totalAmount}</span>
             </div>
           </div>

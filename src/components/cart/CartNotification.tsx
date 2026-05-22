@@ -11,6 +11,7 @@ import { QuantityControl } from "./QuantityControl";
 import { useAppSelector } from "@/lib/hooks";
 import { useCheckoutModal } from "../providers/CheckoutModalProvider";
 import { Product } from "@/types";
+import { useRouter } from "next/navigation";
 
 // Helper function
 const formatPrice = (price: number) => {
@@ -44,6 +45,7 @@ const CloseButton = ({ action }: { action: () => void }) => (
 
 // Main Cart Notification Component
 export default function CartNotification() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [isMobile, setIsMobile] = useState(false);
   // const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -105,8 +107,9 @@ export default function CartNotification() {
   // }, []);
 
   const handleViewCart = useCallback(() => {
-    hideCartNotification();
-    // In Next.js: router.push('/cart')
+    dispatch(hideCartNotification());
+
+    router.push("/cart");
   }, []);
 
   const handleCheckout = () => {

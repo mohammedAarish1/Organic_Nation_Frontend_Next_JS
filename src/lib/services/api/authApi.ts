@@ -75,7 +75,7 @@ export const authApi = createApi({
       query: () => "/auth/user",
       providesTags: ["User"],
     }),
-    logout: builder.mutation<{ message: string }, void>({
+    logout: builder.mutation<{ success: boolean; message: string }, void>({
       query: () => ({ url: "/auth/user/logout-new", method: "POST" }),
       // invalidatesTags: ["User"],
     }),

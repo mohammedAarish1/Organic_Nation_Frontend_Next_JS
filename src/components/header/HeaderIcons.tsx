@@ -11,6 +11,8 @@ import UserMenu from "../user/UserMenu";
 import SearchButton from "../menu/SearchButton";
 import { useProducts } from "../providers/ProductsProvider";
 import { Product } from "@/types";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export const HeaderIcons = memo(function HeaderIcons() {
   const { products } = useProducts();
@@ -19,12 +21,18 @@ export const HeaderIcons = memo(function HeaderIcons() {
   const { totalCartItems } = useAppSelector((state) => state.cart);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-
+  const router = useRouter();
   const [logout] = useLogoutMutation();
   // ✅ useCallback: stable reference, no re-subscription on every render
   const handleLogout = useCallback(async () => {
-    await logout();
-    setShowUserMenu(false);
+    const result = await logout().unwrap();
+    if (result?.success) {
+      setShowUserMenu(false);
+      toast.success("Logged Out Successfully");
+      router.push("/login");
+    } else {
+      toast.error("Something went wrong");
+    }
   }, [logout]);
 
   const toggleUserMenu = useCallback(
