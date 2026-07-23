@@ -1,5 +1,5 @@
 import { Leaf, Shield, Truck } from "lucide-react";
-import { FadeInView, RotateOnHover } from "../animations/animation2";
+import { FadeInView, RotateOnHover } from "../animations/animations";
 
 export default function FeaturesSection() {
   const features = [
@@ -20,7 +20,7 @@ export default function FeaturesSection() {
     },
   ];
   return (
-    <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
+    <section className="bg-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-8 md:grid-cols-3">
           {features.map((feature, i) => (

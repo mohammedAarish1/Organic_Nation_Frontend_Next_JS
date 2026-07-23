@@ -1,7 +1,7 @@
 import ProductDescriptionSection from "@/components/product-details/ProductDescriptionSection";
 import ProductImageGallery from "../../../../components/product-details/ProductImageGallery";
 import ProductInfo from "../../../../components/product-details/ProductInfo";
-import LabCertification from "@/components/product-details/LabCertification";
+// import LabCertification from "@/components/product-details/LabCertification";
 import ReviewsSection from "@/components/product-details/ReviewsSection";
 import FAQSection from "@/components/product-details/FAQSection";
 import WhyUs from "@/components/product-details/WhyUs";
@@ -12,12 +12,12 @@ import StickyAddToCart from "@/components/product-details/StickyAddToCart";
 import YouMayAlsoLike from "@/components/product-details/YouMayAlsoLike";
 import AdditionalProductImages from "@/components/product-details/AdditionalProductImages";
 import ProductTabs from "@/components/product-details/ProductTabs";
-import axios from "axios";
 import VideoSection from "@/components/product-details/VideoSection";
 import { Metadata } from "next";
 import { cache } from "react";
 import JsonLd from "@/components/JsonLd";
 import { API_BASE_URL } from "@/constants";
+import { Product } from "@/types";
 
 // This would come from your API/database
 
@@ -26,18 +26,45 @@ type Params = {
   productId: string;
 };
 
+// ✅ NEW — tells Next.js which 72 pages to pre-build
+export async function generateStaticParams() {
+  const res = await fetch(`${API_BASE_URL}/products/all`);
+  const products = await res.json();
+
+  return products.map((p: Product) => ({
+    categoryId: p["category-url"].toLowerCase(),
+    productId: p["name-url"].toLowerCase(),
+  }));
+}
+
+// ✅ NEW — re-generate pages in background every hour (keeps stock/price fresh)
+export const revalidate = 3600;
+export const dynamicParams = true;
+
+// 👇 Your existing code — UNCHANGED
 const getProductDetails = cache(async (productId: string) => {
-  try {
-    const response = await axios.get(
-      `${API_BASE_URL}/products/product/details/${productId}`,
-    );
-    if (response.status === 200) {
-      return response.data;
-    }
-  } catch (error) {
-    return null;
-  }
+  const response = await fetch(
+    `${API_BASE_URL}/products/product/details/${productId}`,
+    { next: { revalidate: 3600 } },
+  );
+  if (!response.ok) return null;
+  return response.json();
 });
+
+// const getProductDetails = cache(async (productId: string) => {
+//   try {
+//     const response = await fetch(
+//       `${API_BASE_URL}/products/product/details/${productId}`,
+//       {
+//         next: { revalidate: 300 }, // cache for 5 mins, no DB hit on every visit
+//       },
+//     );
+//     if (!response.ok) return null;
+//     return response.json();
+//   } catch (error) {
+//     return error.message || "Something went wrong";
+//   }
+// });
 
 export async function generateMetadata({
   params,

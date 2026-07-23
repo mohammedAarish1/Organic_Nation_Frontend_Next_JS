@@ -1,5 +1,5 @@
 import { Leaf } from "lucide-react";
-import { FadeInView } from "../animations/animation2";
+import { FadeInView } from "../animations/animations";
 
 interface Headers {
   subTitle: string;
@@ -14,7 +14,7 @@ export default function SectionHeader({
 }: Headers) {
   return (
     <FadeInView>
-      <div className="mb-8 text-center sm:mb-12">
+      <div className="mb-8 text-center sm:mb-10">
         {subTitle !== "" && (
           <div className="bg-gradient-secondary mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
             <Leaf className="h-4 w-4 text-emerald-700" />

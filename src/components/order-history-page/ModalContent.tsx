@@ -177,22 +177,12 @@ export function ModalContent({ order, productMap, handleOrderCancel }: Props) {
       <div className="rounded-xl border border-emerald-100 p-4">
         <div className="mb-2 text-sm text-gray-800">Payment Method</div>
         <div className="font-semibold text-gray-900 capitalize">
-          {order.paymentMethod.replace("_", " ")}
+          {order.paymentMethod.replaceAll("_", " ")}
         </div>
         <div className="mt-2">
           <PaymentBadge status={order.paymentStatus} />
         </div>
       </div>
-      {order.orderStatus === "active" && (
-        <div className="mt-2 flex justify-end">
-          <button
-            className="cursor-pointer text-sm text-gray-600 underline underline-offset-2"
-            onClick={() => handleOrderCancel(order._id)}
-          >
-            Cancel Order
-          </button>
-        </div>
-      )}
     </div>
   );
 }

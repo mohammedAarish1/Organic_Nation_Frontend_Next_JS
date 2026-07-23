@@ -11,6 +11,7 @@ import { timeAgo } from "@/lib/utils";
 import { useAppSelector } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { MediaGrid } from "../mediaViewer";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
 const StarRating = ({ rating, size = 20 }) => {
@@ -204,7 +205,7 @@ export default function ReviewsSection({
                 Filter by Tags
               </label>
               <div className="flex flex-wrap gap-2">
-                {["all", "Taste", "Packaging", "Texture", "Purity"].map(
+                {["All", "Taste", "Packaging", "Texture", "Purity"].map(
                   (tag) => (
                     <button
                       key={tag}
@@ -259,18 +260,6 @@ export default function ReviewsSection({
                 </div>
               </div>
 
-              {/* Tags */}
-              {/* <div className="flex flex-wrap gap-2 mb-3">
-                {tags.map((tag, tagIdx) => (
-                  <span
-                    key={tagIdx}
-                    className="px-2 py-1 bg-orange-50 text-orange-700 text-xs rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div> */}
-
               <h5 className="mb-2 font-semibold text-gray-900">
                 {review.title}
               </h5>
@@ -281,28 +270,14 @@ export default function ReviewsSection({
               {/* Images & Videos */}
               {(review.images.length > 0 || review.hasVideo) && (
                 <div className="flex flex-wrap gap-3">
-                  {review.images.map((img, imgIdx) => (
-                    <div
-                      key={imgIdx}
-                      className="relative h-24 w-24 cursor-pointer overflow-hidden rounded-lg transition-opacity hover:opacity-80"
-                    >
-                      <Image
-                        src={img}
-                        alt="Review"
-                        width={300}
-                        height={100}
-                        // style={{ objectFit: 'cover' }}
-                      />
-                    </div>
-                  ))}
-                  {review.hasVideo && (
-                    <div className="relative flex h-24 w-24 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-black/80 transition-opacity hover:bg-black">
-                      <Play size={32} color="white" fill="white" />
-                      <span className="absolute right-2 bottom-1 rounded bg-black/50 px-1 text-xs text-white">
-                        Video
-                      </span>
-                    </div>
-                  )}
+                  <MediaGrid
+                    images={review.images}
+                    videos={review.videoUrl ? [review.videoUrl] : []}
+                    // thumbnail style — matches your existing card layout
+                    thumbnailWidth="w-24"
+                    thumbnailHeight="h-24"
+                    thumbnailRounded="rounded-lg"
+                  />
                 </div>
               )}
             </motion.div>

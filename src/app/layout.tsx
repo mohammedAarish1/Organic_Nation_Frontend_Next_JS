@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { getProductsAndCategories } from "@/lib/services/api";
 import { ProductsProvider } from "@/components/providers/ProductsProvider";
 import JsonLd from "@/components/JsonLd";
+import WhatsApp from "@/components/common/WhatsApp";
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
 //   subsets: ["latin"],
@@ -89,6 +90,9 @@ export default async function RootLayout({
             </CheckoutModalProvider>
           </ProductsProvider>
         </StoreProvider>
+        <div className="fixed right-6 bottom-6 z-50">
+          <WhatsApp />
+        </div>
       </body>
     </html>
   );

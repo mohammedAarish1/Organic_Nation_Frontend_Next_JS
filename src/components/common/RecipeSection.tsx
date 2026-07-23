@@ -2,11 +2,11 @@
 import { Calendar, Clock, Heart, Leaf, Star, Utensils } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { AnimationGrid } from "../animations/animation2";
 import { BlogsSkeleton } from "../skeletons/BlogsSkeleton";
 import SectionHeader from "./SectionHeader";
 import { NavigationButton } from "../buttons/NavigationButton";
 import { API_BASE_URL } from "@/constants";
+import { AnimationGrid } from "../animations/animations";
 
 interface Recipe {
   _id: string;

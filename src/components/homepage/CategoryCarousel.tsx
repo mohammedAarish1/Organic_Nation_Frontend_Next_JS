@@ -111,7 +111,7 @@ export default function CategoryCarousel() {
   }, [handleScroll]);
 
   return (
-    <section className="relative overflow-hidden py-12 sm:py-16">
+    <section className="relative overflow-hidden">
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader subTitle="" title="Shop by Category" content="" />
 
@@ -133,7 +133,7 @@ export default function CategoryCarousel() {
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto py-4 sm:gap-6"
+            className="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto sm:gap-6"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             role="list"
             aria-label="Product categories"

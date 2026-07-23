@@ -1,4 +1,4 @@
-import { FadeInView, ScaleOnHover } from "@/components/animations/animation2";
+import { FadeInView, ScaleOnHover } from "@/components/animations/animations";
 import { NavigationButton } from "@/components/buttons/NavigationButton";
 
 export default function HeroText() {

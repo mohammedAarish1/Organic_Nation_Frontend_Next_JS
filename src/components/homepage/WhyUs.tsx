@@ -1,7 +1,7 @@
 import { CheckCircle, Leaf, ShieldCheck, Star } from "lucide-react";
-import { FadeInView } from "../animations/animation2";
 import SectionHeader from "../common/SectionHeader";
 import Image from "next/image";
+import { FadeInView } from "../animations/animations";
 
 interface Feature {
   img: string;
@@ -83,7 +83,7 @@ export default function WhyUs() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-linear-to-b from-emerald-50/30 to-white py-12 sm:py-16 lg:py-20">
+    <section className="relative overflow-hidden bg-linear-to-b from-emerald-50/30 to-white py-2">
       {/* Decorative Background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-20">
         <div className="absolute top-20 left-1/4 h-64 w-64 rounded-full bg-amber-200 blur-3xl" />

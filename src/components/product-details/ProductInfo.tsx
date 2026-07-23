@@ -126,7 +126,7 @@ export default function ProductInfo({ product, finalPrice }) {
     <div className="flex flex-col">
       <div className="flex-1">
         {/* Title and Ratings */}
-        <h1 className="mb-1 text-xl font-extrabold text-gray-900">
+        <h1 className="font mb-1 text-2xl font-semibold text-gray-900">
           {product.details.title || product.details.name}
         </h1>
 

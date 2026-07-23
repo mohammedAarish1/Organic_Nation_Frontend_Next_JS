@@ -17,7 +17,7 @@ import ReviewModal from "../product-details/ReviewModal";
 import { OrderDetailsModal } from "./Orderdetailsmodal";
 import { ModalContent } from "./ModalContent";
 import { OrderItemActions } from "./Orderitemactions";
-import { Order, OrderItem } from "@/features/order/types";
+import { Order } from "@/features/order/types";
 import { ProductMap } from "@/features/product/types";
 import ReturnItemForm from "./ReturnItemForm";
 import Image from "next/image";
@@ -25,6 +25,7 @@ import { useCancelOrderMutation } from "@/lib/services/api/ordersApi";
 import { toast } from "react-toastify";
 import { Product } from "@/types";
 import Link from "next/link";
+import { MongoID } from "@/types/common";
 
 interface Props {
   order: Order;
@@ -59,7 +60,7 @@ export const OrderCard = memo(function OrderCard({ order, productMap }: Props) {
     setReturnFormVisible(true);
   }, []);
 
-  const handleOrderCancel = async (orderId: string) => {
+  const handleOrderCancel = async (orderId: MongoID) => {
     try {
       const result = await cancelOrder(orderId).unwrap();
       toast.info(result?.msg);
@@ -76,7 +77,7 @@ export const OrderCard = memo(function OrderCard({ order, productMap }: Props) {
     <>
       <article className="rounded-2xl bg-white shadow-md transition-shadow hover:shadow-xl">
         {/* ── Card header ─────────────────────────────────────────────── */}
-        <div className="border-b border-emerald-100 bg-gradient-to-r from-emerald-50/50 to-amber-50/50 p-4 sm:p-6">
+        <div className="border-b border-emerald-100 bg-linear-to-r from-emerald-50/50 to-amber-50/50 p-4 sm:p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-2">
               <div className="flex flex-wrap items-center gap-2">
@@ -214,6 +215,17 @@ export const OrderCard = memo(function OrderCard({ order, productMap }: Props) {
               Order Details
             </button>
           </div>
+
+          {order.orderStatus === "active" && (
+            <div className="mt-2 flex justify-end">
+              <button
+                className="cursor-pointer text-sm text-gray-600 underline underline-offset-2"
+                onClick={() => handleOrderCancel(order._id)}
+              >
+                Cancel Order
+              </button>
+            </div>
+          )}
         </div>
       </article>
 

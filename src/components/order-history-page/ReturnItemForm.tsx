@@ -665,7 +665,7 @@ export default function ReturnItemForm({
               {/* Video Upload */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Upload Video{" "}
+                  Upload Video<span className="text-red-500">*</span>
                   <span className="ml-2 text-xs text-gray-500">
                     ( Maximum 15MB)
                   </span>

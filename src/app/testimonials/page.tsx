@@ -2,10 +2,10 @@ import { Star, Heart, ShoppingBag, Users, User2Icon } from "lucide-react";
 import {
   FadeInFromLeft,
   FadeInFromRight,
+  FadeInView,
   FloatingBackground2,
   ShimmerReveal,
 } from "@/components/animations/animations";
-import { FadeInView } from "@/components/animations/animation2";
 import FeaturedTestimonials from "@/components/testimonials/FeaturedTestimonials";
 // import SocialMediaReviews from "@/components/testimonials/SocialMediaReviews";
 import axios from "axios";

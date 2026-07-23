@@ -11,13 +11,13 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import axios from "axios";
 import { API_BASE_URL } from "@/constants";
-import { FloatingBackground } from "@/components/animations/animation2";
 import {
   BounceIn,
   ClipReveal,
   FadeInFromLeft,
   FadeInFromRight,
   FadeInView,
+  FloatingBackground,
   ShimmerReveal,
 } from "@/components/animations/animations";
 import ShareBox from "@/components/blog-details-page/ShareBox";

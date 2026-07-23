@@ -1,4 +1,5 @@
-import { Play } from "lucide-react";
+// import { Play } from "lucide-react";
+import VideoPlayer from "../common/VideoPlayer";
 
 export default function VideoSection({ videos }) {
   return (
@@ -10,12 +11,15 @@ export default function VideoSection({ videos }) {
         <div className="scrollbar-hide flex flex-row gap-5 overflow-x-auto p-1">
           {videos.map((videoUrl, index) => {
             return (
-              <video
-                key={index}
-                src={videoUrl}
-                className="h-[420px] w-full rounded-lg border bg-gray-700 object-center"
-                controls
-              />
+              <div key={index}>
+                <VideoPlayer src={videoUrl} className="h-125" />
+              </div>
+              // <video
+              //   key={index}
+              //   src={videoUrl}
+              //   className="h-[420px] w-full rounded-lg border bg-gray-700 object-center"
+              //   controls
+              // />
             );
           })}
         </div>

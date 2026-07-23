@@ -1,11 +1,11 @@
 import { Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { AnimationGrid } from "../animations/animation2";
 import { BlogsSkeleton } from "../skeletons/BlogsSkeleton";
 import SectionHeader from "./SectionHeader";
 import { NavigationButton } from "../buttons/NavigationButton";
 import { API_BASE_URL } from "@/constants";
+import { AnimationGrid } from "../animations/animations";
 
 interface Blog {
   _id: string;
@@ -133,7 +133,7 @@ export default async function BlogSection({
   const blogs = (await getBlogs()) || [];
   const displayBlogs = homePage ? blogs?.slice(0, 3) : blogs;
   return (
-    <section className="relative overflow-hidden bg-linear-to-b from-white to-amber-50/30 py-12 sm:py-16 lg:py-20">
+    <section className="relative overflow-hidden bg-linear-to-b from-white to-amber-50/30 py-3">
       {/* Decorative Background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-20">
         <div className="absolute top-20 left-1/3 h-64 w-64 rounded-full bg-amber-200 blur-3xl" />

@@ -10,6 +10,8 @@ import WhyUs from "@/components/homepage/WhyUs";
 import { BlogsSkeleton } from "@/components/skeletons/BlogsSkeleton";
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import CertificatesSection from "@/components/homepage/CertificatesSection";
+import Banner from "@/components/homepage/Banner";
 // import SocialDMReviews from "@/components/testimonials/SocialDMReviews";
 
 export const metadata: Metadata = {
@@ -75,13 +77,15 @@ export const metadata: Metadata = {
 // This is a Server Component by default in Next.js App Router
 export default async function HomePage() {
   return (
-    <main className="min-h-screen">
-      <HeroSection />
+    <main className="flex min-h-screen flex-col gap-14 sm:gap-24">
+      <Banner />
+      {/* <HeroSection /> */}
       <CategoryCarousel />
       <FeaturedProducts />
       <FeaturesSection />
       <CategoriesSection />
       <WhyUs />
+      <CertificatesSection />
       {/* <SocialDMReviews/> */}
       <Suspense fallback={<BlogsSkeleton />}>
         <BlogSection homePage />

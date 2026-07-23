@@ -15,10 +15,29 @@ const heroMedia = [
   // },
   {
     type: "image",
-    emoji: "🥗",
-    gradient: "from-[#A8B575] to-[#7A7D3F]",
     src: "https://organic-nation-product-images.s3.ap-south-1.amazonaws.com/products/Stuffed-Red-chilli-pickle/md/front.webp",
+    path: "",
   },
+  {
+    type: "image",
+    src: "https://organic-nation-product-images.s3.ap-south-1.amazonaws.com/products/Organic-Wild-Forest-Honey/lg/front.webp",
+    path: "",
+  },
+  // {
+  //   type: "image",
+  //   src: "",
+  //   path:""
+  // },
+  // {
+  //   type: "image",
+  //   src: "",
+  //   path:""
+  // },
+  // {
+  //   type: "image",
+  //   src: "",
+  //   path:""
+  // },
 ];
 
 export default function HeroImage() {
@@ -44,7 +63,7 @@ export default function HeroImage() {
         transition={{ duration: 0.8 }}
         className="relative"
       >
-        <div className="relative z-10">
+        <div className="relative -z-10">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
@@ -55,13 +74,16 @@ export default function HeroImage() {
               className="overflow-hidden rounded-3xl bg-white shadow-2xl"
             >
               <div
-                className={`aspect-square bg-linear-to-br ${heroMedia[currentSlide].gradient} flex items-center justify-center text-[200px]`}
+                className={`flex aspect-square items-center justify-center bg-linear-to-br text-[200px]`}
               >
                 {heroMedia[currentSlide].type === "image" ? (
-                  <img
+                  <Image
                     src={heroMedia[currentSlide].src}
                     alt="product"
-                    className="h-full w-full object-cover"
+                    className="cursor-pointer object-cover"
+                    width={600}
+                    height={600}
+                    // onClick={()=>console.log('hello')}
                   />
                 ) : (
                   <video

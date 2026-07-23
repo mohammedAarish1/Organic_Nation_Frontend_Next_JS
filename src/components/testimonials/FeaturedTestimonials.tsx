@@ -3,44 +3,10 @@
 
 import { useState } from "react";
 import { Star, Quote, ChevronLeft, ChevronRight, User2 } from "lucide-react";
-import Image from "next/image";
 import { FadeInView, ShimmerReveal } from "@/components/animations/animations";
 
 const FeaturedTestimonials = ({ feturedReviews: testimonials }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  // const testimonials = [
-  //   {
-  //     id: 1,
-  //     name: "Priya Sharma",
-  //     location: "Delhi",
-  //     image: "https://i.pravatar.cc/150?img=1",
-  //     rating: 5,
-  //     text: "The organic honey from Organic Nation is absolutely pure! You can taste the difference. My family has been using it for 6 months now and we won't switch to any other brand. The packaging is excellent and delivery is always on time.",
-  //     product: "Organic Honey",
-  //     verified: true,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Rajesh Kumar",
-  //     location: "Mumbai",
-  //     image: "https://i.pravatar.cc/150?img=12",
-  //     rating: 5,
-  //     text: "These homestyle pickles remind me of my grandmother's recipes! Authentic taste, no preservatives, and made with love. I've ordered multiple times and gifted to friends too. Highly recommended for anyone who loves traditional flavors.",
-  //     product: "Homestyle Pickles",
-  //     verified: true,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Sneha Patel",
-  //     location: "Bangalore",
-  //     image: "https://i.pravatar.cc/150?img=5",
-  //     rating: 5,
-  //     text: "As a health-conscious person, finding truly organic products is challenging. Organic Nation delivers on their promise. The oats are fresh, the quality is consistent, and I love supporting a brand that cares about sustainability.",
-  //     product: "Organic Oats",
-  //     verified: true,
-  //   },
-  // ];
 
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);

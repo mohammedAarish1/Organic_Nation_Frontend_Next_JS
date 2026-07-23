@@ -49,7 +49,7 @@ export const OrderDetailsModal = memo(function OrderDetailsModal({
             onClick={(e) => e.stopPropagation()}
           >
             {/* Sticky header — only the close button is interactive */}
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-emerald-100 bg-gradient-to-r from-emerald-50 to-amber-50 p-4 sm:p-6">
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-emerald-100 bg-linear-to-r from-emerald-50 to-amber-50 p-4 sm:p-6">
               <div>
                 <h2 className="text-xl font-bold text-gray-900 sm:text-2xl">
                   Order Details

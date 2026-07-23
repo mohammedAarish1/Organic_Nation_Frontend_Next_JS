@@ -10,8 +10,8 @@ import {
   ThumbsUp,
   Star,
 } from "lucide-react";
-import { FadeInView } from "@/components/animations/animation2";
 import { Instagram } from "../svg-icons/svgIcons";
+import { FadeInView } from "../animations/animations";
 
 interface Testimonial {
   id: string;

@@ -10,7 +10,7 @@ import {
 // Full Page Version
 export default function Login() {
   return (
-    <section className="relative flex min-h-screen items-center bg-linear-to-b from-amber-50/30 to-white px-4 py-12 sm:px-6 md:px-8">
+    <section className="relative mt-5 flex min-h-screen items-center bg-linear-to-b from-amber-50/30 to-white px-4 py-20 sm:mt-0 sm:px-6 md:px-8">
       {/* Decorative Background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute -top-20 -left-20 h-40 w-40 rounded-full bg-amber-500 opacity-5" />
